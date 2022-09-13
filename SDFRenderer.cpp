@@ -70,8 +70,8 @@ void SDFRenderer::onLoad(RenderContext* pRenderContext)
 {
     Program::Desc d;
 
-    d.addShaderLibrary("Samples/SDFRenderer/SDFRenderer.vs.slang").entryPoint(ShaderType::Vertex, "main");
-    d.addShaderLibrary("Samples/SDFRenderer/SDFRenderer.ps.slang").entryPoint(ShaderType::Pixel, "main");
+    d.addShaderLibrary("Samples/SDFRenderer/Shaders/SDFRenderer.vs.slang").entryPoint(ShaderType::Vertex, "main");
+    d.addShaderLibrary("Samples/SDFRenderer/Shaders/SDFRenderer.ps.slang").entryPoint(ShaderType::Pixel, "main");
 
     mProgram = GraphicsProgram::create(d);
     FALCOR_ASSERT(mProgram);

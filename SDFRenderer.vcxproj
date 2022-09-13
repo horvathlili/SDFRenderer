@@ -22,10 +22,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ShaderSource Include="Ray.hlsl" />
-    <ShaderSource Include="sdf.hlsl" />
-    <ShaderSource Include="SDFRenderer.ps.slang" />
-    <ShaderSource Include="SDFRenderer.vs.slang" />
+    <ShaderSource Include="Shaders\SDFRenderer.ps.slang" />
+    <ShaderSource Include="Shaders\SDFRenderer.vs.slang" />
+    <ShaderSource Include="Utils\Ray.hlsl" />
+    <ShaderSource Include="Utils\sdf.hlsl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{6BE93358-53F7-48DD-AABA-00C6B152E8F9}</ProjectGuid>

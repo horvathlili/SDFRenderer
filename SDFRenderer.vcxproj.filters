@@ -7,9 +7,25 @@
     <ClInclude Include="SDFRenderer.h" />
   </ItemGroup>
   <ItemGroup>
-    <ShaderSource Include="SDFRenderer.ps.slang" />
-    <ShaderSource Include="SDFRenderer.vs.slang" />
-    <ShaderSource Include="Ray.hlsl" />
-    <ShaderSource Include="sdf.hlsl" />
+    <ShaderSource Include="Shaders\SDFRenderer.ps.slang">
+      <Filter>Shaders</Filter>
+    </ShaderSource>
+    <ShaderSource Include="Shaders\SDFRenderer.vs.slang">
+      <Filter>Shaders</Filter>
+    </ShaderSource>
+    <ShaderSource Include="Utils\Ray.hlsl">
+      <Filter>Utils</Filter>
+    </ShaderSource>
+    <ShaderSource Include="Utils\sdf.hlsl">
+      <Filter>Utils</Filter>
+    </ShaderSource>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{6aac1bb9-2c62-4f73-966c-01d0ee0ca596}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{ab61f47e-2ab2-4831-b0da-493de0d8d336}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

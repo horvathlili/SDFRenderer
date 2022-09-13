@@ -1,5 +1,5 @@
-#include "Ray.hlsl"
-#include "sdf.hlsl"
+#include "../Utils/Ray.hlsl"
+#include "../Utils/sdf.hlsl"
 
 struct psIn
 {
