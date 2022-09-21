@@ -2,9 +2,11 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="SDFRenderer.cpp" />
+    <ClCompile Include="ComputeProgramWrapper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SDFRenderer.h" />
+    <ClInclude Include="ComputeProgramWrapper.h" />
   </ItemGroup>
   <ItemGroup>
     <ShaderSource Include="Shaders\SDFRenderer.ps.slang">
@@ -18,6 +20,9 @@
     </ShaderSource>
     <ShaderSource Include="Utils\sdf.hlsl">
       <Filter>Utils</Filter>
+    </ShaderSource>
+    <ShaderSource Include="Shaders\SDFTexture.cs.slang">
+      <Filter>Shaders</Filter>
     </ShaderSource>
   </ItemGroup>
   <ItemGroup>

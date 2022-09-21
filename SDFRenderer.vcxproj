@@ -11,9 +11,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ComputeProgramWrapper.cpp" />
     <ClCompile Include="SDFRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ComputeProgramWrapper.h" />
     <ClInclude Include="SDFRenderer.h" />
   </ItemGroup>
   <ItemGroup>
@@ -24,6 +26,7 @@
   <ItemGroup>
     <ShaderSource Include="Shaders\SDFRenderer.ps.slang" />
     <ShaderSource Include="Shaders\SDFRenderer.vs.slang" />
+    <ShaderSource Include="Shaders\SDFTexture.cs.slang" />
     <ShaderSource Include="Utils\Ray.hlsl" />
     <ShaderSource Include="Utils\sdf.hlsl" />
   </ItemGroup>

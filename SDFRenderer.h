@@ -1,5 +1,6 @@
 #pragma once
 #include "Falcor.h"
+#include "ComputeProgramWrapper.h"
 
 using namespace Falcor;
 
@@ -35,9 +36,19 @@ private:
     Camera::SharedPtr camera;
     CameraController::SharedPtr ccontrol;
 
+    float2 resolution = float2(1280, 720);
+
     uint32_t sdf = 1;
 
-   // DebugConsole console;
+    ComputeProgramWrapper::SharedPtr mComputeProgram;
+    Texture::SharedPtr sdfTexture;
+    Texture::SharedPtr generateTexture(RenderContext* pRenderContext);
+    float3 boundingBox = float3(50, 50, 50);
+    int res = 500;
+    bool retexture = false;
 
+    uint32_t texturesize = 1;
+
+    Sampler::SharedPtr mpSampler;
 
 };

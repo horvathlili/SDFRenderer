@@ -15,7 +15,31 @@ cbuffer psCb
     float4 up;
     float ar;
     int sdf;
+    float3 boundingBox;
 };
+
+Texture3D texture;
+SamplerState mSampler;
+
+bool isOutOfBox(float3 pos)
+{
+    bool r = (pos.x > -boundingBox.x / 2.0 && pos.x < boundingBox.x / 2.0 &&
+              pos.y > -boundingBox.y / 2.0 && pos.y < boundingBox.y / 2.0 &&
+              pos.z > -boundingBox.z / 2.0 && pos.z < boundingBox.z / 2.0);
+
+    return !r;
+
+}
+
+float get_texture(float3 uvw)
+{
+    return texture.Sample(mSampler, uvw).r;
+}
+
+float3 get_normal(float3 uvw)
+{
+    return texture.Sample(mSampler, uvw).gba;
+}
 
 
 float4 main(psIn input) : SV_TARGET
@@ -24,18 +48,20 @@ float4 main(psIn input) : SV_TARGET
     
     float t = 0.0f;
     int i;
-    int n = 200;
+    int n = 50;
+    float3 pos;
     
     for (i = 0; i < n; i++)
     {
-        float3 pos = r.p + t * r.v;
-        float h = map(pos,sdf);
-        if (h < 0.001)
+        pos = r.p + t * r.v;
+        //float h = map(pos,sdf);
+        float h = get_texture(pos / (float3) boundingBox + 0.5);
+        if (h < 0.001 || isOutOfBox(pos))
             break;
         t += h;
     }
 
-    if (i >= n)
+    if (i >= n || isOutOfBox(pos))
     {
         return float4(0, 0, 0, 1);
     }
@@ -50,8 +76,9 @@ float4 main(psIn input) : SV_TARGET
         float3 light_dir = float3(-1, -1, -1);
         
         float3 ambient = La * Ka;
-        float3 diffuse = clamp(dot(normalize(light_dir), getNormal(r.p+t*r.v, sdf)), 0, 1) * Ld * Kd;
+        float3 diffuse = clamp(dot(normalize(light_dir), get_normal(pos / (float3) boundingBox + 0.5)), 0, 1) * Ld * Kd;
 
         return float4(ambient+diffuse, 1);
     }
+
 }

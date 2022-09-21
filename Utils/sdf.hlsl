@@ -22,11 +22,11 @@ float sdBoxFrame(float3 p, float3 b, float e)
 float map(float3 p, int sdf)
 {
     if (sdf == 1)
-        return sdSphere(p, 1);
+        return sdSphere(p, 5);
     if (sdf == 2)
-        return sdTorus(p, float2(1, 0.3));
+        return sdTorus(p, float2(5, 2));
     if (sdf == 3)
-        return sdBoxFrame(p, float3(1, 1, 1), 0.1);
+        return sdBoxFrame(p, float3(5, 5, 5), 0.5);
 
     return 0;
 }
