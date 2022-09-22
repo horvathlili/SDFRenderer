@@ -44,7 +44,7 @@ float3 get_normal(float3 uvw)
 
 float4 main(psIn input) : SV_TARGET
 {
-    Ray r = getRay(eye.xyz, center.xyz, up.xyz, ar, input.pixelpos.x, input.pixelpos.y);  
+    Ray r = getRay(eye.xyz, center.xyz, up.xyz, ar, input.pixelpos.x, input.pixelpos.y);
     
     float t = 0.0f;
     int i;
@@ -55,7 +55,7 @@ float4 main(psIn input) : SV_TARGET
     {
         pos = r.p + t * r.v;
         //float h = map(pos,sdf);
-        float h = get_texture(pos / (float3) boundingBox + 0.5);
+       float h = get_texture(pos / (float3) boundingBox + 0.5);
         if (h < 0.001 || isOutOfBox(pos))
             break;
         t += h;
@@ -76,7 +76,7 @@ float4 main(psIn input) : SV_TARGET
         float3 light_dir = float3(-1, -1, -1);
         
         float3 ambient = La * Ka;
-        float3 diffuse = clamp(dot(normalize(light_dir), get_normal(pos / (float3) boundingBox + 0.5)), 0, 1) * Ld * Kd;
+        float3 diffuse = clamp(dot(normalize(-light_dir), get_normal(pos / (float3) boundingBox + 0.5)), 0, 1) * Ld * Kd;
 
         return float4(ambient+diffuse, 1);
     }

@@ -79,7 +79,7 @@ void SDFRenderer::initData() {
 void SDFRenderer::initCamera() {
 
     camera = Camera::create();
-    camera->setPosition(float3(0, -5, 10));
+    camera->setPosition(float3(-5, 5, 10));
     camera->setTarget(float3(0, 0, 0));
     camera->setUpVector(float3(0, 1, 0));
     camera->setAspectRatio(1280.0f / 720.0f);
