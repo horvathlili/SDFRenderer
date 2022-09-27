@@ -22,18 +22,18 @@ float sdBoxFrame(float3 p, float3 b, float e)
 float map(float3 p, int sdf)
 {
     if (sdf == 1)
-        return sdSphere(p, 5);
+        return sdSphere(p, 1);
     if (sdf == 2)
-        return sdTorus(p, float2(5, 2));
+        return sdTorus(p, float2(1, 0.4));
     if (sdf == 3)
-        return sdBoxFrame(p, float3(5, 5, 5), 0.5);
+        return sdBoxFrame(p, float3(1, 1, 1), 0.1);
 
     return 0;
 }
 
 float3 getNormal(float3 p, int sdf)
 {
-    float e = 0.0001; // or some other value
+    float e = 0.0001;
     float3 n;
     n.x = map(p + float3(e, 0, 0), sdf) - map(p - float3(e, 0, 0),sdf);
     n.y = map(p + float3(0, e, 0), sdf) - map(p - float3(0, e, 0), sdf);

@@ -25,10 +25,10 @@ void SDFRenderer::onGuiRender(Gui* pGui)
     if (w.radioButtons(bg, sdf))
         retexture = true;
 
-    if (w.slider("resolution", res, 10, 750))
+    if (w.slider("resolution", res, 10, 256))
         retexture = true;
 
-    if (w.slider("Bounding box", boundingBox, 0, 200))
+    if (w.slider("Bounding box", boundingBox, 0, 50))
         retexture = true;
 
     Gui::RadioButton tex16;
@@ -79,7 +79,7 @@ void SDFRenderer::initData() {
 void SDFRenderer::initCamera() {
 
     camera = Camera::create();
-    camera->setPosition(float3(-5, 5, 10));
+    camera->setPosition(float3(-2, 2, 2));
     camera->setTarget(float3(0, 0, 0));
     camera->setUpVector(float3(0, 1, 0));
     camera->setAspectRatio(1280.0f / 720.0f);
@@ -127,6 +127,8 @@ void SDFRenderer::onLoad(RenderContext* pRenderContext)
     sdfTexture = generateTexture(pRenderContext);
 
     mpVars["mSampler"] = mpSampler;
+
+    getPseudoInverse(float3(0, 0, 0));
 
 }
 
@@ -198,6 +200,59 @@ Texture::SharedPtr SDFRenderer::generateTexture(RenderContext* pRenderContext) {
 
     return pTex;
 }
+
+void SDFRenderer::getPseudoInverse(float3 xi) {
+
+    float m[27][4];
+
+    for (int i = -1; i <= 1; i++)
+    {
+        for (int j = -1; j <= 1; j++)
+        {
+            for (int k = -1; k <= 1; k++)
+            {
+                float3 x = xi + float3(i, j, k) / 3.0f * 0.6f;
+
+                m[(i + 1) * 9 + (j + 1) * 3 + (k + 1)][0] = 1;
+                m[(i + 1) * 9 + (j + 1) * 3 + (k + 1)][1] = x.x;
+                m[(i + 1) * 9 + (j + 1) * 3 + (k + 1)][2] = x.y;
+                m[(i + 1) * 9 + (j + 1) * 3 + (k + 1)][3] = x.z;
+
+            }
+        }
+
+    }
+
+    float4x4 xplus;
+
+    for (int l = 0; l < 4; l++)
+    {
+        for (int j = 0; j < 4; j++)
+        {
+            xplus[l][j] = 0;
+            for (int k = 0; k < 27; k++)
+            {
+                xplus[l][j] += m[k][l] * m[j][k];
+            }
+        }
+    }
+
+    float4x4 xinv = inverse(xplus);
+
+    for (int l = 0; l < 4; l++)
+    {
+        for (int j = 0; j < 27; j++)
+        {
+            x0[l][j] = 0;
+            for (int k = 0; k < 4; k++)
+            {
+                x0[l][j] += xinv[l][k] * m[j][k];
+            }
+        }
+    }
+
+}
+
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nShowCmd)
 {

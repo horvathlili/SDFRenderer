@@ -1,6 +1,7 @@
 #pragma once
 #include "Falcor.h"
 #include "ComputeProgramWrapper.h"
+#include "Utils/inverse.h"
 
 using namespace Falcor;
 
@@ -44,11 +45,17 @@ private:
     Texture::SharedPtr sdfTexture;
     Texture::SharedPtr generateTexture(RenderContext* pRenderContext);
     float3 boundingBox = float3(50, 50, 50);
-    int res = 500;
+    int res = 256;
     bool retexture = false;
 
     uint32_t texturesize = 1;
 
     Sampler::SharedPtr mpSampler;
+
+    void getPseudoInverse(float3 xi);
+    float x0[4][27];
+
+    DebugConsole console;
+
 
 };
