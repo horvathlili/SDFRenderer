@@ -42,9 +42,12 @@ private:
     uint32_t sdf = 1;
 
     ComputeProgramWrapper::SharedPtr mComputeProgram;
+    ComputeProgramWrapper::SharedPtr mComputeProgramFirstOrder;
     Texture::SharedPtr sdfTexture;
     Texture::SharedPtr generateTexture(RenderContext* pRenderContext);
-    float3 boundingBox = float3(50, 50, 50);
+    uint32_t textureOrder = 0;
+
+     float3 boundingBox = float3(50, 50, 50);
     int res = 256;
     bool retexture = false;
 
@@ -52,10 +55,10 @@ private:
 
     Sampler::SharedPtr mpSampler;
 
-    void getPseudoInverse(float3 xi);
-    float x0[4][27];
+    //DebugConsole console;
 
-    DebugConsole console;
+    float x0[108];
+    void getPseudoInverse(float3 x1);
 
 
 };

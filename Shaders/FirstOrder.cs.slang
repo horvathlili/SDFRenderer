@@ -1,13 +1,13 @@
 #include "../Utils/sdf.hlsl"
 
 RWTexture3D<float4> tex3D_uav;
+RWStructuredBuffer<float> x0;
 
 cbuffer csCb
 {
     int sdf;
     float3 boundingBox;
     int res;
-    float x0[4][27];
 };
 
 float getDist(float3 pos)
@@ -24,10 +24,11 @@ void main(uint3 threadId : SV_DispatchThreadID)
     //xi meghatározása
     float3 xi = -boundingBox / 2.0 + (threadId.xyz + 0.5) * (boundingBox / res);
 
-    float m[27][4];
     float f[27];
 
     //kisebb grid xi körül
+
+    float3 x;
 
     for (int i = -1; i <= 1; i++)
     {
@@ -35,20 +36,34 @@ void main(uint3 threadId : SV_DispatchThreadID)
         {
             for (int k = -1; k <= 1; k++)
             {
-                float3 x = xi + float3(i, j, k) / 3 * 0.6;
-
-                m[(i + 1) * 9 + (j + 1) * 3 + (k + 1)][0] = 1;
-                m[(i + 1) * 9 + (j + 1) * 3 + (k + 1)][1] = x.x;
-                m[(i + 1) * 9 + (j + 1) * 3 + (k + 1)][2] = x.y;
-                m[(i + 1) * 9 + (j + 1) * 3 + (k + 1)][3] = x.z;
+                x = xi + float3(i, j, k) * (boundingBox / res) * 0.4;
 
                 f[(i + 1) * 9 + (j + 1) * 3 + (k + 1)] = getDist(x);
                
             }
         }
 
-    }    
+    }
+
+
+    float4 ai;
     
-        float4 val = float4(getDist(xi), getNormal(xi, sdf));
-    tex3D_uav[threadId.xyz] = val;
+    for (int l = 0; l < 4; l++)
+    {
+        float aa = 0;
+        for (int j = 0; j < 27; j++)
+        {
+            aa += x0[l * 27 + j] * f[j];
+        }
+       if (l == 3)
+        {
+            aa -= (ai[0] * xi.x + ai[1] * xi.y + ai[2] * xi.z);
+        }
+        ai[l] = aa;
+    }
+   
+    float n = sqrt(ai.r * ai.r + ai.g * ai.g + ai.b * ai.b);
+    float4 a = { ai.r / n, ai.g / n, ai.b / n, ai.a/ n };
+    
+    tex3D_uav[threadId.xyz] = a;
 }

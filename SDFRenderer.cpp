@@ -46,6 +46,22 @@ void SDFRenderer::onGuiRender(Gui* pGui)
 
     if (w.radioButtons(texsize, texturesize))
         retexture = true;
+
+    Gui::RadioButton tex0;
+    tex0.label = "order 0";
+    tex0.buttonID = 0;
+    Gui::RadioButton tex1;
+    tex1.label = "order 1";
+    tex1.buttonID = 1;
+
+    Gui::RadioButtonGroup texorder;
+    texorder.push_back(tex0);
+    texorder.push_back(tex1);
+
+    w.separator();
+
+    if (w.radioButtons(texorder, textureOrder))
+        retexture = true;
 }
 
 
@@ -117,6 +133,9 @@ void SDFRenderer::onLoad(RenderContext* pRenderContext)
 
     mComputeProgram = ComputeProgramWrapper::create();
     mComputeProgram->createProgram("Samples/SDFRenderer/Shaders/SDFTexture.cs.slang");
+    mComputeProgramFirstOrder = ComputeProgramWrapper::create();
+    mComputeProgramFirstOrder->createProgram("Samples/SDFRenderer/Shaders/FirstOrder.cs.slang");
+
 
     {
         Sampler::Desc desc;
@@ -125,10 +144,9 @@ void SDFRenderer::onLoad(RenderContext* pRenderContext)
     }
 
     sdfTexture = generateTexture(pRenderContext);
+   // firstOrderTexture = generateTextureFirstOrder(pRenderContext);
 
     mpVars["mSampler"] = mpSampler;
-
-    getPseudoInverse(float3(0, 0, 0));
 
 }
 
@@ -152,6 +170,7 @@ void SDFRenderer::onFrameRender(RenderContext* pRenderContext, const Fbo::Shared
     mpVars["psCb"]["up"] = camera->getUpVector();
     mpVars["psCb"]["ar"] = camera->getAspectRatio();
     mpVars["psCb"]["sdf"] = sdf;
+    mpVars["psCb"]["texorder"] = textureOrder;
     mpVars["psCb"]["boundingBox"] = boundingBox;
 
     pRenderContext->draw(mpState.get(), mpVars.get(), 4, 0);
@@ -190,11 +209,25 @@ Texture::SharedPtr SDFRenderer::generateTexture(RenderContext* pRenderContext) {
     if (texturesize == 2)
         pTex = Texture::create3D(res, res, res, ResourceFormat::RGBA32Float, 1, nullptr, ResourceBindFlags::ShaderResource | ResourceBindFlags::UnorderedAccess);
 
+    
     auto comp = *mComputeProgram;
+
+    if (textureOrder == 1)
+        comp = *mComputeProgramFirstOrder;
+
     comp["tex3D_uav"].setUav(pTex->getUAV(0));
-    comp["csCb"]["sdf"].set(sdf);
-    comp["csCb"]["boundingBox"].set(boundingBox);
+    comp["csCb"]["sdf"] = sdf;
+    comp["csCb"]["boundingBox"] = boundingBox;
     comp["csCb"]["res"].set(res);
+
+    if (textureOrder == 1) {
+        //xi meghatározása
+        float3 xi = -boundingBox / 2.0f + 0.5f * (boundingBox / (float)res);
+        getPseudoInverse(xi);
+
+        comp.allocateStructuredBuffer("x0", 108, x0, sizeof(float) * 108);
+    }
+
 
     comp.runProgram(pRenderContext,res,res,res);
 
@@ -211,7 +244,7 @@ void SDFRenderer::getPseudoInverse(float3 xi) {
         {
             for (int k = -1; k <= 1; k++)
             {
-                float3 x = xi + float3(i, j, k) / 3.0f * 0.6f;
+                float3 x = xi + float3(i, j, k) * (boundingBox / (float)res) * 0.4f;
 
                 m[(i + 1) * 9 + (j + 1) * 3 + (k + 1)][0] = 1;
                 m[(i + 1) * 9 + (j + 1) * 3 + (k + 1)][1] = x.x;
@@ -232,7 +265,7 @@ void SDFRenderer::getPseudoInverse(float3 xi) {
             xplus[l][j] = 0;
             for (int k = 0; k < 27; k++)
             {
-                xplus[l][j] += m[k][l] * m[j][k];
+                xplus[l][j] += m[k][l] * m[k][j];
             }
         }
     }
@@ -243,10 +276,10 @@ void SDFRenderer::getPseudoInverse(float3 xi) {
     {
         for (int j = 0; j < 27; j++)
         {
-            x0[l][j] = 0;
+            x0[l*27+j] = 0;
             for (int k = 0; k < 4; k++)
             {
-                x0[l][j] += xinv[l][k] * m[j][k];
+                x0[l*27 + j] += xinv[l][k] * m[j][k];
             }
         }
     }

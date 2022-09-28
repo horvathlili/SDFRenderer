@@ -16,6 +16,7 @@ cbuffer psCb
     float ar;
     int sdf;
     float3 boundingBox;
+    int texorder;
 };
 
 Texture3D texture;
@@ -31,10 +32,20 @@ bool isOutOfBox(float3 pos)
 
 }
 
-float get_texture(float3 uvw)
+float get_texture(float3 uvw, float3 pos, int order)
 {
-    return texture.Sample(mSampler, uvw).r;
+    if (order == 0)
+   {
+        return texture.Sample(mSampler, uvw).r;
+    }
+    if (order == 1)
+    {
+        float4 s = texture.Sample(mSampler, uvw);
+        return s.r * pos.x + s.g * pos.y + s.b * pos.z + s.a;
+    }
+    return 0;
 }
+
 
 float3 get_normal(float3 uvw)
 {
@@ -55,8 +66,8 @@ float4 main(psIn input) : SV_TARGET
     {
         pos = r.p + t * r.v;
         //float h = map(pos,sdf);
-       float h = get_texture(pos / (float3) boundingBox + 0.5);
-        if (h < 0.001 || isOutOfBox(pos))
+       float h = get_texture(pos / (float3) boundingBox + 0.5,pos,texorder);
+       if (h < 0.001 || isOutOfBox(pos))
             break;
         t += h;
     }
