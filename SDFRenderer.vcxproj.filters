@@ -3,16 +3,10 @@
   <ItemGroup>
     <ClCompile Include="SDFRenderer.cpp" />
     <ClCompile Include="ComputeProgramWrapper.cpp" />
-    <ClCompile Include="Utils\inverse.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SDFRenderer.h" />
     <ClInclude Include="ComputeProgramWrapper.h" />
-    <ClInclude Include="Utils\inverse.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ShaderSource Include="Shaders\SDFRenderer.ps.slang">

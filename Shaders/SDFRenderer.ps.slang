@@ -15,8 +15,8 @@ cbuffer psCb
     float4 up;
     float ar;
     int sdf;
-    float3 boundingBox;
     int texorder;
+    float delta;
 };
 
 Texture3D texture;
@@ -24,9 +24,9 @@ SamplerState mSampler;
 
 bool isOutOfBox(float3 pos)
 {
-    bool r = (pos.x > -boundingBox.x / 2.0 && pos.x < boundingBox.x / 2.0 &&
-              pos.y > -boundingBox.y / 2.0 && pos.y < boundingBox.y / 2.0 &&
-              pos.z > -boundingBox.z / 2.0 && pos.z < boundingBox.z / 2.0);
+    bool r = (pos.x > -1 && pos.x < 1 &&
+              pos.y > -1 && pos.y < 1 &&
+              pos.z > -1 && pos.z < 1);
 
     return !r;
 
@@ -39,17 +39,21 @@ float get_texture(float3 uvw, float3 pos, int order)
         return texture.Sample(mSampler, uvw).r;
     }
     if (order == 1)
-    {
+    {     
         float4 s = texture.Sample(mSampler, uvw);
-        return s.r * pos.x + s.g * pos.y + s.b * pos.z + s.a;
+        return dot(s, float4(pos, 1.0));
     }
     return 0;
 }
 
 
-float3 get_normal(float3 uvw)
+float3 get_normal(float3 uvw, int order)
 {
-    return texture.Sample(mSampler, uvw).gba;
+    if (order == 0)
+        return texture.Sample(mSampler, uvw).gba;
+    if (order == 1)
+        return texture.Sample(mSampler, uvw).rgb;
+    return 0;
 }
 
 
@@ -59,19 +63,19 @@ float4 main(psIn input) : SV_TARGET
     
     float t = 0.0f;
     int i;
-    int n = 50;
-    float3 pos;
+    int n = 100;
+    float3 pos = r.p + t * r.v;
+    //return texture.Sample(mSampler, pos);
     
     for (i = 0; i < n; i++)
     {
         pos = r.p + t * r.v;
-        //float h = map(pos,sdf);
-       float h = get_texture(pos / (float3) boundingBox + 0.5,pos,texorder);
-       if (h < 0.001 || isOutOfBox(pos))
+        float h = get_texture(pos / 2.0f + float3(0.5), pos, texorder);
+       if (h < 0.0001 || isOutOfBox(pos))
             break;
         t += h;
     }
-
+    
     if (i >= n || isOutOfBox(pos))
     {
         return float4(0, 0, 0, 1);
@@ -87,7 +91,7 @@ float4 main(psIn input) : SV_TARGET
         float3 light_dir = float3(-1, -1, -1);
         
         float3 ambient = La * Ka;
-        float3 diffuse = clamp(dot(normalize(-light_dir), get_normal(pos / (float3) boundingBox + 0.5)), 0, 1) * Ld * Kd;
+        float3 diffuse = clamp(dot(normalize(-light_dir), get_normal(pos / 2.0 + 0.5,texorder)), 0, 1) * Ld * Kd;
 
         return float4(ambient+diffuse, 1);
     }

@@ -28,9 +28,6 @@ void SDFRenderer::onGuiRender(Gui* pGui)
     if (w.slider("resolution", res, 10, 256))
         retexture = true;
 
-    if (w.slider("Bounding box", boundingBox, 0, 50))
-        retexture = true;
-
     Gui::RadioButton tex16;
     tex16.label = "16 bit";
     tex16.buttonID = 1;
@@ -95,7 +92,7 @@ void SDFRenderer::initData() {
 void SDFRenderer::initCamera() {
 
     camera = Camera::create();
-    camera->setPosition(float3(-2, 2, 2));
+    camera->setPosition(float3(0.75,0.75, -0.75));
     camera->setTarget(float3(0, 0, 0));
     camera->setUpVector(float3(0, 1, 0));
     camera->setAspectRatio(1280.0f / 720.0f);
@@ -144,15 +141,12 @@ void SDFRenderer::onLoad(RenderContext* pRenderContext)
     }
 
     sdfTexture = generateTexture(pRenderContext);
-   // firstOrderTexture = generateTextureFirstOrder(pRenderContext);
-
+   
     mpVars["mSampler"] = mpSampler;
-
 }
 
 void SDFRenderer::onFrameRender(RenderContext* pRenderContext, const Fbo::SharedPtr& pTargetFbo)
 {
-    //textúra generálás
     if (retexture) {
         sdfTexture = generateTexture(pRenderContext);
         retexture = false;
@@ -171,7 +165,6 @@ void SDFRenderer::onFrameRender(RenderContext* pRenderContext, const Fbo::Shared
     mpVars["psCb"]["ar"] = camera->getAspectRatio();
     mpVars["psCb"]["sdf"] = sdf;
     mpVars["psCb"]["texorder"] = textureOrder;
-    mpVars["psCb"]["boundingBox"] = boundingBox;
 
     pRenderContext->draw(mpState.get(), mpVars.get(), 4, 0);
 }
@@ -217,73 +210,51 @@ Texture::SharedPtr SDFRenderer::generateTexture(RenderContext* pRenderContext) {
 
     comp["tex3D_uav"].setUav(pTex->getUAV(0));
     comp["csCb"]["sdf"] = sdf;
-    comp["csCb"]["boundingBox"] = boundingBox;
-    comp["csCb"]["res"].set(res);
+    comp["csCb"]["res"] = res;
 
     if (textureOrder == 1) {
-        //xi meghatározása
-        float3 xi = -boundingBox / 2.0f + 0.5f * (boundingBox / (float)res);
-        getPseudoInverse(xi);
-
+        getPseudoInverse();
         comp.allocateStructuredBuffer("x0", 108, x0, sizeof(float) * 108);
-    }
 
+    }
 
     comp.runProgram(pRenderContext,res,res,res);
 
     return pTex;
 }
 
-void SDFRenderer::getPseudoInverse(float3 xi) {
+void SDFRenderer::getPseudoInverse() {
 
-    float m[27][4];
+    Eigen::MatrixXf m(27,4);
 
-    for (int i = -1; i <= 1; i++)
-    {
-        for (int j = -1; j <= 1; j++)
-        {
-            for (int k = -1; k <= 1; k++)
-            {
-                float3 x = xi + float3(i, j, k) * (boundingBox / (float)res) * 0.4f;
+    for (int i = -1; i <= 1; i++) {
+        for (int j = -1; j <= 1; j++) {
+            for (int k = -1; k <= 1; k++) {
 
-                m[(i + 1) * 9 + (j + 1) * 3 + (k + 1)][0] = 1;
-                m[(i + 1) * 9 + (j + 1) * 3 + (k + 1)][1] = x.x;
-                m[(i + 1) * 9 + (j + 1) * 3 + (k + 1)][2] = x.y;
-                m[(i + 1) * 9 + (j + 1) * 3 + (k + 1)][3] = x.z;
+                float3 x = float3(i, j, k) / (float)res * 0.6f;
 
-            }
-        }
-
-    }
-
-    float4x4 xplus;
-
-    for (int l = 0; l < 4; l++)
-    {
-        for (int j = 0; j < 4; j++)
-        {
-            xplus[l][j] = 0;
-            for (int k = 0; k < 27; k++)
-            {
-                xplus[l][j] += m[k][l] * m[k][j];
+                m((i + 1) * 9 + (j + 1) * 3 + (k + 1),0) = 1;
+                m((i + 1) * 9 + (j + 1) * 3 + (k + 1),1) = x.x;
+                m((i + 1) * 9 + (j + 1) * 3 + (k + 1),2) = x.y;
+                m((i + 1) * 9 + (j + 1) * 3 + (k + 1),3) = x.z;
+                
             }
         }
     }
 
-    float4x4 xinv = inverse(xplus);
+    Eigen::MatrixXf xtx = (m.transpose() * m);
+    //std::cout << xtx << std::endl;
+    Eigen::MatrixXf xinv = xtx.inverse();
+    //std::cout << xinv << std::endl;
 
-    for (int l = 0; l < 4; l++)
-    {
-        for (int j = 0; j < 27; j++)
-        {
-            x0[l*27+j] = 0;
-            for (int k = 0; k < 4; k++)
-            {
-                x0[l*27 + j] += xinv[l][k] * m[j][k];
-            }
+    Eigen::MatrixXf result = xtx * m.transpose();
+    //std::cout << result << std::endl;
+
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 27; j++) {
+            x0[i * 27 + j] = result(i, j);
         }
     }
-
 }
 
 

@@ -13,12 +13,10 @@
   <ItemGroup>
     <ClCompile Include="ComputeProgramWrapper.cpp" />
     <ClCompile Include="SDFRenderer.cpp" />
-    <ClCompile Include="Utils\inverse.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ComputeProgramWrapper.h" />
     <ClInclude Include="SDFRenderer.h" />
-    <ClInclude Include="Utils\inverse.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Falcor\Falcor.vcxproj">
