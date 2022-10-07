@@ -23,7 +23,7 @@ void main(uint3 threadId : SV_DispatchThreadID)
 
     float3 delta = 2.0f / float3(res);
     
-    float3 xi = float3(-1, -1, -1) + (threadId.xyz + 0.5) * delta;
+    float3 xi = (threadId.xyz + 0.5) * delta - 1.0;
 
 
     float f[27]; 
@@ -34,7 +34,7 @@ void main(uint3 threadId : SV_DispatchThreadID)
         {
             for (int k = -1; k <= 1; k++)
             {
-                float3 x = xi + float3(i, j, k) * 0.6f / float(res);
+                float3 x = xi + float3(i, j, k) * 0.6f *delta;
 
                 f[(i + 1) * 9 + (j + 1) * 3 + (k + 1)] = getDist(x);
             }
@@ -52,13 +52,13 @@ void main(uint3 threadId : SV_DispatchThreadID)
         }
         if (l == 3)
         {
-            aa -= dot(ai.rgb, xi - 0.5*delta);
+            aa -= dot(ai.rgb, xi);
         }
         ai[l] = aa;
     }
 
-    //float n = sqrt(ai.r * ai.r + ai.g * ai.g + ai.b * ai.b);
+    float n = sqrt(ai.r * ai.r + ai.g * ai.g + ai.b * ai.b);
     
-    tex3D_uav[threadId.xyz] = normalize(ai);
+    tex3D_uav[threadId.xyz] = float4(ai.rgba / n);
 
 }

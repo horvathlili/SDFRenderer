@@ -231,9 +231,9 @@ void SDFRenderer::getPseudoInverse() {
         for (int j = -1; j <= 1; j++) {
             for (int k = -1; k <= 1; k++) {
 
-                float3 x = float3(i, j, k) / (float)res * 0.6f;
+                float3 x = float3(i, j, k) * 2.0f / (float)res * 0.6f;
 
-                m((i + 1) * 9 + (j + 1) * 3 + (k + 1),0) = 1;
+                m((i + 1) * 9 + (j + 1) * 3 + (k + 1),0) = 1.0;
                 m((i + 1) * 9 + (j + 1) * 3 + (k + 1),1) = x.x;
                 m((i + 1) * 9 + (j + 1) * 3 + (k + 1),2) = x.y;
                 m((i + 1) * 9 + (j + 1) * 3 + (k + 1),3) = x.z;
@@ -242,12 +242,9 @@ void SDFRenderer::getPseudoInverse() {
         }
     }
 
-    Eigen::MatrixXf xtx = (m.transpose() * m);
-    //std::cout << xtx << std::endl;
-    Eigen::MatrixXf xinv = xtx.inverse();
-    //std::cout << xinv << std::endl;
+  
 
-    Eigen::MatrixXf result = xtx * m.transpose();
+    Eigen::MatrixXf result = (m.transpose()*m).inverse() * m.transpose();
     //std::cout << result << std::endl;
 
     for (int i = 0; i < 4; i++) {

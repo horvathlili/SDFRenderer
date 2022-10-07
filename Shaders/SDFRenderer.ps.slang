@@ -41,7 +41,7 @@ float get_texture(float3 uvw, float3 pos, int order)
     if (order == 1)
     {     
         float4 s = texture.Sample(mSampler, uvw);
-        return dot(s, float4(pos, 1.0));
+        return s.r*pos.x+s.g*pos.y+s.b*pos.z+s.a;
     }
     return 0;
 }
@@ -54,6 +54,12 @@ float3 get_normal(float3 uvw, int order)
     if (order == 1)
         return texture.Sample(mSampler, uvw).rgb;
     return 0;
+}
+
+float plane(float3 p, float3 v)
+{
+    return dot(float3(0, 0, 0) - p, float3(0, 0, -1)) / dot(v, float3(0, 0, -1));
+    //return dot(float3(0, 0, 0) - p, float3(-1, 0, 0)) / dot(v, float3(-1, 0, 0));
 }
 
 
@@ -70,11 +76,31 @@ float4 main(psIn input) : SV_TARGET
     for (i = 0; i < n; i++)
     {
         pos = r.p + t * r.v;
-        float h = get_texture(pos / 2.0f + float3(0.5), pos, texorder);
-       if (h < 0.0001 || isOutOfBox(pos))
+        float h = get_texture(pos / float3(2.0f) + float3(0.5), float3(pos.x, pos.yz), texorder);
+       if (h < 0.0001 /*|| isOutOfBox(pos)*/)
             break;
         t += h;
     }
+
+    float tp = plane(r.p, r.v);
+    
+    if (tp > 0. /*&& length(r.p + tp * r.v - r.p) < length(r.p + t * r.v - r.p)*/)
+    {
+
+        
+        pos = r.p + tp * r.v;
+
+        float d = get_texture(pos / float3(2.0) + float3(0.5), pos+1.0, texorder);
+
+        float3 col = (d > 0.0) ? float3(0.9, 0.6, 0.3) : float3(0.65, 0.85, 1.0);
+        col *= 1.0 - exp(-6.0 * abs(d));
+        col *= 0.8 + 0.2 * cos(150.0 * d);
+        col = col * smoothstep(0.0, 0.01, abs(d)) + float3(1.0) * (1.0 - smoothstep(0.0, 0.01, abs(d)));
+
+        //return float4(dot(texture.Sample(mSampler, pos / 2.0 + float3(0.5)), float4(pos, 1.0)));
+        return float4(col, 1);
+    }
+
     
     if (i >= n || isOutOfBox(pos))
     {
