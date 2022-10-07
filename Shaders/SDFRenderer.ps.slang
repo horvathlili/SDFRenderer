@@ -77,17 +77,18 @@ float4 main(psIn input) : SV_TARGET
     {
         pos = r.p + t * r.v;
         float h = get_texture(pos / float3(2.0f) + float3(0.5), float3(pos.x, pos.yz), texorder);
-       if (h < 0.0001 /*|| isOutOfBox(pos)*/)
+       if (h < 0.0001 || isOutOfBox(pos))
             break;
         t += h;
     }
 
-    float tp = plane(r.p, r.v);
+
+    //ez csak a hibakereséshez van, kirajzolja az sdf-et egy sík mentén
+    /*float tp = plane(r.p, r.v);
     
-    if (tp > 0. /*&& length(r.p + tp * r.v - r.p) < length(r.p + t * r.v - r.p)*/)
+    if (tp > 0. && length(r.p + tp * r.v - r.p) < length(r.p + t * r.v - r.p))
     {
 
-        
         pos = r.p + tp * r.v;
 
         float d = get_texture(pos / float3(2.0) + float3(0.5), pos+1.0, texorder);
@@ -99,7 +100,7 @@ float4 main(psIn input) : SV_TARGET
 
         //return float4(dot(texture.Sample(mSampler, pos / 2.0 + float3(0.5)), float4(pos, 1.0)));
         return float4(col, 1);
-    }
+    }*/
 
     
     if (i >= n || isOutOfBox(pos))
