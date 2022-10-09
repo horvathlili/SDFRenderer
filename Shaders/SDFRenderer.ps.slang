@@ -81,7 +81,7 @@ float4 main(psIn input) : SV_TARGET
         for (i = 0; i < n; i++)
         {
             pos = r.p + t * r.v;
-        float h = get_texture(pos / float3(2 + 1/(float) res) + float3(0.5), pos, texorder);
+        float h = get_texture(pos / float3(2.0 + 1.0/(float) res) + float3(0.5), pos, texorder);
         if (h < 0.0001 || isOutOfBox(pos))
                 break;
             t += h;
@@ -102,7 +102,7 @@ float4 main(psIn input) : SV_TARGET
             float3 light_dir = float3(-1, -1, -1);
         
             float3 ambient = La * Ka;
-            float3 diffuse = clamp(dot(normalize(-light_dir), get_normal(pos / 2.0 + 0.5, texorder)), 0, 1) * Ld * Kd;
+        float3 diffuse = clamp(dot(normalize(-light_dir), get_normal(pos / 2.0 + 0.5, texorder)), 0, 1) * Ld * Kd;
 
             return float4(ambient + diffuse, 1);
         }

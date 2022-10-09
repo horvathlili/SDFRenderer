@@ -54,9 +54,9 @@ private:
     Texture::SharedPtr generateTexture(RenderContext* pRenderContext);
     uint32_t textureOrder = 0;
 
-    int res = 256;
+    int res = 100;
     bool retexture = false;
-    int boundingbox = 2;
+    //int boundingbox = 2;
     bool isOutOfBox(float3 pos);
 
     uint32_t texturesize = 1;

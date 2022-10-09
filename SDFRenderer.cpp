@@ -60,7 +60,7 @@ void SDFRenderer::onGuiRender(Gui* pGui)
     if (w.radioButtons(texorder, textureOrder))
         retexture = true;
 
-    w.slider("boundingBox", boundingbox, 2,20);
+   // w.slider("boundingBox", boundingbox, 2,20);
 }
 
 
@@ -191,7 +191,7 @@ void SDFRenderer::onLoad(RenderContext* pRenderContext)
     initData();
     initBox();
 
-    mpState->setVao(pVao);
+    //mpState->setVao(pVao);
  
     initCamera();
 
@@ -216,9 +216,9 @@ void SDFRenderer::onLoad(RenderContext* pRenderContext)
 
 bool SDFRenderer::isOutOfBox(float3 pos)
 {
-    bool r = (pos.x > -1 && pos.x < 1 &&
-        pos.y > -1 && pos.y < 1 &&
-        pos.z > -1 && pos.z < 1);
+    bool r = (pos.x > -1.0 && pos.x < 1.0 &&
+        pos.y > -1.0 && pos.y < 1.0 &&
+        pos.z > -1.0 && pos.z < 1.0);
 
     return !r;
 
@@ -230,9 +230,6 @@ void SDFRenderer::onFrameRender(RenderContext* pRenderContext, const Fbo::Shared
         sdfTexture = generateTexture(pRenderContext);
         retexture = false;
     }
-
-    //kívül vagyunk-e a boundingboxon
-    isbox = isOutOfBox(camera->getPosition());
     
     mpVars["texture"] = sdfTexture;
 
@@ -241,6 +238,9 @@ void SDFRenderer::onFrameRender(RenderContext* pRenderContext, const Fbo::Shared
     pRenderContext->clearFbo(mpState->getFbo().get(), clearColor, 1.0f, 0);
 
     ccontrol->update();
+    //kívül vagyunk-e a boundingboxon
+    isbox = isOutOfBox(camera->getPosition());
+
     mpVars["psCb"]["eye"] = camera->getPosition();
     mpVars["psCb"]["center"] = camera->getTarget();
     mpVars["psCb"]["up"] = camera->getUpVector();
@@ -249,9 +249,8 @@ void SDFRenderer::onFrameRender(RenderContext* pRenderContext, const Fbo::Shared
     mpVars["psCb"]["texorder"] = textureOrder;
     mpVars["psCb"]["box"] = isbox;
     mpVars["psCb"]["res"] = res;
-   // mpVars["psCb"]["boundingBox"] = boundingbox;
 
-    float4x4 m = glm::scale(float4x4(1), float3(2));
+    float4x4 m = glm::scale(float4x4(1.0), float3(2.0,2.0,2.0));
     mpVars["vsCb"]["model"] = m;
     mpVars["vsCb"]["viewproj"] = camera->getViewProjMatrix();
     mpVars["vsCb"]["box"] = isbox;
@@ -302,10 +301,7 @@ Texture::SharedPtr SDFRenderer::generateTexture(RenderContext* pRenderContext) {
         pTex = Texture::create3D(res, res, res, ResourceFormat::RGBA32Float, 1, nullptr, ResourceBindFlags::ShaderResource | ResourceBindFlags::UnorderedAccess);
 
     
-    auto comp = *mComputeProgram;
-
-    if (textureOrder == 1)
-        comp = *mComputeProgramFirstOrder;
+    auto& comp = (textureOrder == 0) ? *mComputeProgram : *mComputeProgramFirstOrder;
 
     comp["tex3D_uav"].setUav(pTex->getUAV(0));
     comp["csCb"]["sdf"] = sdf;
@@ -314,7 +310,6 @@ Texture::SharedPtr SDFRenderer::generateTexture(RenderContext* pRenderContext) {
     if (textureOrder == 1) {
         getPseudoInverse();
         comp.allocateStructuredBuffer("x0", 108, x0->data(), sizeof(float) * 108);
-
     }
 
     comp.runProgram(pRenderContext,res,res,res);
@@ -325,6 +320,8 @@ Texture::SharedPtr SDFRenderer::generateTexture(RenderContext* pRenderContext) {
 void SDFRenderer::getPseudoInverse() {
 
     Eigen::MatrixXf m(27,4);
+
+    x0->clear();
 
     for (int i = -1; i <= 1; i++) {
         for (int j = -1; j <= 1; j++) {
