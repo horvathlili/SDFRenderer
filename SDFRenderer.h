@@ -2,6 +2,7 @@
 #include "Falcor.h"
 #include "ComputeProgramWrapper.h"
 #include "Eigen/Dense"
+#include <vector>
 
 using namespace Falcor;
 
@@ -25,6 +26,10 @@ private:
     Buffer::SharedPtr pVbo;
     Vao::SharedPtr pVao;
 
+    Buffer::SharedPtr cubeVbo;
+    Vao::SharedPtr cubeVao;
+    bool isbox = false;
+
     struct Vertex
     {
         float3 pos;
@@ -32,12 +37,14 @@ private:
     };
 
     void initData();
+    void initBox();
     void initCamera();
 
     Camera::SharedPtr camera;
     CameraController::SharedPtr ccontrol;
 
     float2 resolution = float2(1280, 720);
+
 
     uint32_t sdf = 1;
 
@@ -49,6 +56,8 @@ private:
 
     int res = 256;
     bool retexture = false;
+    int boundingbox = 2;
+    bool isOutOfBox(float3 pos);
 
     uint32_t texturesize = 1;
 
@@ -56,7 +65,7 @@ private:
 
     DebugConsole console;
 
-    float x0[108];
+    std::vector<float> x0[108];
     void getPseudoInverse();
 
 

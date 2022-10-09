@@ -5,7 +5,7 @@ struct psIn
 {
     float4 pos : SV_POSITION;
     float3 col : COLOR;
-    float2 pixelpos : POSITION;
+    float3 pixelpos : POSITION;
 };
 
 cbuffer psCb
@@ -16,7 +16,10 @@ cbuffer psCb
     float ar;
     int sdf;
     int texorder;
-    float delta;
+    int res;
+   // float boundingBox;
+
+    bool box;
 };
 
 Texture3D texture;
@@ -24,9 +27,9 @@ SamplerState mSampler;
 
 bool isOutOfBox(float3 pos)
 {
-    bool r = (pos.x > -1 && pos.x < 1 &&
-              pos.y > -1 && pos.y < 1 &&
-              pos.z > -1 && pos.z < 1);
+    bool r = (pos.x > -1.0 && pos.x < 1.0 &&
+        pos.y > -1.0 && pos.y < 1.0 &&
+        pos.z > -1.0 && pos.z < 1.0);
 
     return !r;
 
@@ -56,71 +59,51 @@ float3 get_normal(float3 uvw, int order)
     return 0;
 }
 
-float plane(float3 p, float3 v)
-{
-    return dot(float3(0, 0, 0) - p, float3(0, 0, -1)) / dot(v, float3(0, 0, -1));
-    //return dot(float3(0, 0, 0) - p, float3(-1, 0, 0)) / dot(v, float3(-1, 0, 0));
-}
-
-
 float4 main(psIn input) : SV_TARGET
 {
-    Ray r = getRay(eye.xyz, center.xyz, up.xyz, ar, input.pixelpos.x, input.pixelpos.y);
-    
-    float t = 0.0f;
-    int i;
-    int n = 100;
-    float3 pos = r.p + t * r.v;
-    //return texture.Sample(mSampler, pos);
-    
-    for (i = 0; i < n; i++)
+    Ray r;
+    if (!box)
     {
-        pos = r.p + t * r.v;
-        float h = get_texture(pos / float3(2.0f) + float3(0.5), float3(pos.x, pos.yz), texorder);
-       if (h < 0.0001 || isOutOfBox(pos))
-            break;
-        t += h;
-    }
-
-
-    //ez csak a hibakereséshez van, kirajzolja az sdf-et egy sík mentén
-    /*float tp = plane(r.p, r.v);
-    
-    if (tp > 0. && length(r.p + tp * r.v - r.p) < length(r.p + t * r.v - r.p))
-    {
-
-        pos = r.p + tp * r.v;
-
-        float d = get_texture(pos / float3(2.0) + float3(0.5), pos+1.0, texorder);
-
-        float3 col = (d > 0.0) ? float3(0.9, 0.6, 0.3) : float3(0.65, 0.85, 1.0);
-        col *= 1.0 - exp(-6.0 * abs(d));
-        col *= 0.8 + 0.2 * cos(150.0 * d);
-        col = col * smoothstep(0.0, 0.01, abs(d)) + float3(1.0) * (1.0 - smoothstep(0.0, 0.01, abs(d)));
-
-        //return float4(dot(texture.Sample(mSampler, pos / 2.0 + float3(0.5)), float4(pos, 1.0)));
-        return float4(col, 1);
-    }*/
-
-    
-    if (i >= n || isOutOfBox(pos))
-    {
-        return float4(0, 0, 0, 1);
+        r = getRay(eye.xyz, center.xyz, up.xyz, ar, input.pixelpos.x, input.pixelpos.y);
     }
     else
     {
-        float3 La = float3(0.4, 0.4, 0.4);
-        float3 Ld = float3(0.8, 0.8, 0.8);
+        r.v = normalize(input.pixelpos - eye.xyz);
+        r.p = input.pixelpos + 0.001 * r.v;
         
-        float3 Ka = float3(0.2, 0.4, 0.6);
-        float3 Kd = float3(0.8, 0.8, 0.8);
-            
-        float3 light_dir = float3(-1, -1, -1);
-        
-        float3 ambient = La * Ka;
-        float3 diffuse = clamp(dot(normalize(-light_dir), get_normal(pos / 2.0 + 0.5,texorder)), 0, 1) * Ld * Kd;
-
-        return float4(ambient+diffuse, 1);
     }
+        float t = 0.0f;
+        int i;
+        int n = 100;
+        float3 pos = r.p + t * r.v;
+    //return texture.Sample(mSampler, pos);
+    
+        for (i = 0; i < n; i++)
+        {
+            pos = r.p + t * r.v;
+        float h = get_texture(pos / float3(2 + 1/(float) res) + float3(0.5), pos, texorder);
+        if (h < 0.0001 || isOutOfBox(pos))
+                break;
+            t += h;
+        }
+    
+        if (i >= n || isOutOfBox(pos))
+        {
+            return float4(0, 0, 0, 1);
+        }
+        else
+        {
+            float3 La = float3(0.4, 0.4, 0.4);
+            float3 Ld = float3(0.8, 0.8, 0.8);
+        
+            float3 Ka = float3(0.2, 0.4, 0.6);
+            float3 Kd = float3(0.8, 0.8, 0.8);
+            
+            float3 light_dir = float3(-1, -1, -1);
+        
+            float3 ambient = La * Ka;
+            float3 diffuse = clamp(dot(normalize(-light_dir), get_normal(pos / 2.0 + 0.5, texorder)), 0, 1) * Ld * Kd;
 
+            return float4(ambient + diffuse, 1);
+        }
 }

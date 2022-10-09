@@ -59,6 +59,8 @@ void SDFRenderer::onGuiRender(Gui* pGui)
 
     if (w.radioButtons(texorder, textureOrder))
         retexture = true;
+
+    w.slider("boundingBox", boundingbox, 2,20);
 }
 
 
@@ -70,7 +72,7 @@ void SDFRenderer::initData() {
         {float3(1, -1, 0), float3(0, 1,0)},
         {float3(-1, 1, 0), float3(0, 0,1)},
         {float3(1, 1, 0), float3(0,0, 0)},
-        };
+    };
 
     const uint32_t vbSize = (uint32_t)(sizeof(Vertex) * arraysize(vertices));
     
@@ -87,6 +89,71 @@ void SDFRenderer::initData() {
     Vao::BufferVec buffers{ pVbo };
     pVao = Vao::create(Vao::Topology::TriangleStrip, pLayout, buffers);
     FALCOR_ASSERT(pVao);
+}
+
+void SDFRenderer::initBox() {
+    std::vector<Vertex>vertices;
+
+    //front									 
+    vertices.push_back({ float3(-0.5, -0.5, +0.5), float3(1,1,1) });
+    vertices.push_back({float3(+0.5, -0.5, +0.5), float3(1,1,1) });
+    vertices.push_back({ float3(-0.5, +0.5, +0.5), float3(1,1,1) });
+    vertices.push_back({ float3(+0.5, +0.5, +0.5), float3(1,1,1) });
+    //back
+    vertices.push_back({ float3(+0.5, -0.5, -0.5), float3(1,1,1) });
+    vertices.push_back({ float3(-0.5, -0.5, -0.5), float3(1,1,1) });
+    vertices.push_back({ float3(+0.5, +0.5, -0.5), float3(1,1,1) });
+    vertices.push_back({ float3(-0.5, +0.5, -0.5), float3(1,1,1) });
+    //right									 
+    vertices.push_back({ float3(+0.5, -0.5, +0.5), float3(1,1,1) });
+    vertices.push_back({ float3(+0.5, -0.5, -0.5), float3(1,1,1) });
+    vertices.push_back({ float3(+0.5, +0.5, +0.5), float3(1,1,1) });
+    vertices.push_back({ float3(+0.5, +0.5, -0.5), float3(1,1,1) });
+    //left									 
+    vertices.push_back({ float3(-0.5, -0.5, -0.5), float3(1,1,1) });
+    vertices.push_back({ float3(-0.5, -0.5, +0.5), float3(1,1,1) });
+    vertices.push_back({ float3(-0.5, +0.5, -0.5), float3(1,1,1) });
+    vertices.push_back({ float3(-0.5, +0.5, +0.5), float3(1,1,1) });
+    //top									 
+    vertices.push_back({ float3(-0.5, +0.5, +0.5), float3(1,1,1) });
+    vertices.push_back({ float3(+0.5, +0.5, +0.5), float3(1,1,1) });
+    vertices.push_back({ float3(-0.5, +0.5, -0.5), float3(1,1,1) });
+    vertices.push_back({ float3(+0.5, +0.5, -0.5), float3(1,1,1) });
+    //bottom								 
+    vertices.push_back({ float3(-0.5, -0.5, -0.5), float3(1,1,1) });
+    vertices.push_back({ float3(+0.5, -0.5, -0.5), float3(1,1,1) });
+    vertices.push_back({ float3(-0.5, -0.5, +0.5), float3(1,1,1) });
+    vertices.push_back({ float3(+0.5, -0.5, +0.5), float3(1,1,1) });
+
+    Vertex indices[36];
+    int index = 0;
+    //4 csúcspontonként 6 index eltárolása
+    for (int i = 0; i < 6 * 4; i += 4)
+    {
+        indices[index + 0] = vertices[i + 0];
+        indices[index + 1] = vertices[i + 1];
+        indices[index + 2] = vertices[i + 2];
+        indices[index + 3] = vertices[i + 1];
+        indices[index + 4] = vertices[i + 3];
+        indices[index + 5] = vertices[i + 2];
+        index += 6;
+    }
+
+    const uint32_t vbSize = (uint32_t)(sizeof(Vertex) * arraysize(indices));
+
+    cubeVbo = Buffer::create(vbSize, Buffer::BindFlags::Vertex, Buffer::CpuAccess::Write, (void*)indices);
+    FALCOR_ASSERT(cubeVbo);
+
+    // Create VAO
+    VertexLayout::SharedPtr pLayout = VertexLayout::create();
+    VertexBufferLayout::SharedPtr pBufLayout = VertexBufferLayout::create();
+    pBufLayout->addElement("POSITION", 0, ResourceFormat::RGB32Float, 1, 0);
+    pBufLayout->addElement("COLOR", 12, ResourceFormat::RGB32Float, 1, 1);
+    pLayout->addBufferLayout(0, pBufLayout);
+
+    Vao::BufferVec buffers{ cubeVbo };
+    cubeVao = Vao::create(Vao::Topology::TriangleList, pLayout, buffers);
+    FALCOR_ASSERT(cubeVao);
 }
 
 void SDFRenderer::initCamera() {
@@ -122,8 +189,10 @@ void SDFRenderer::onLoad(RenderContext* pRenderContext)
     mpState->setDepthStencilState(pDsState);
 
     initData();
-    mpState->setVao(pVao);
+    initBox();
 
+    mpState->setVao(pVao);
+ 
     initCamera();
 
     mpVars = GraphicsVars::create(mpState->getProgram().get());
@@ -145,17 +214,30 @@ void SDFRenderer::onLoad(RenderContext* pRenderContext)
     mpVars["mSampler"] = mpSampler;
 }
 
+bool SDFRenderer::isOutOfBox(float3 pos)
+{
+    bool r = (pos.x > -1 && pos.x < 1 &&
+        pos.y > -1 && pos.y < 1 &&
+        pos.z > -1 && pos.z < 1);
+
+    return !r;
+
+}
+
 void SDFRenderer::onFrameRender(RenderContext* pRenderContext, const Fbo::SharedPtr& pTargetFbo)
 {
     if (retexture) {
         sdfTexture = generateTexture(pRenderContext);
         retexture = false;
     }
+
+    //kívül vagyunk-e a boundingboxon
+    isbox = isOutOfBox(camera->getPosition());
     
     mpVars["texture"] = sdfTexture;
 
     mpState->setFbo(pTargetFbo);
-    float4 clearColor = float4(1, 1, 1, 1);
+    float4 clearColor = float4(0, 0, 0, 1);
     pRenderContext->clearFbo(mpState->getFbo().get(), clearColor, 1.0f, 0);
 
     ccontrol->update();
@@ -165,8 +247,25 @@ void SDFRenderer::onFrameRender(RenderContext* pRenderContext, const Fbo::Shared
     mpVars["psCb"]["ar"] = camera->getAspectRatio();
     mpVars["psCb"]["sdf"] = sdf;
     mpVars["psCb"]["texorder"] = textureOrder;
+    mpVars["psCb"]["box"] = isbox;
+    mpVars["psCb"]["res"] = res;
+   // mpVars["psCb"]["boundingBox"] = boundingbox;
 
-    pRenderContext->draw(mpState.get(), mpVars.get(), 4, 0);
+    float4x4 m = glm::scale(float4x4(1), float3(2));
+    mpVars["vsCb"]["model"] = m;
+    mpVars["vsCb"]["viewproj"] = camera->getViewProjMatrix();
+    mpVars["vsCb"]["box"] = isbox;
+
+   if (isbox) {
+        mpState->setVao(cubeVao);
+        pRenderContext->draw(mpState.get(), mpVars.get(), 36, 0);
+   }
+   else {
+       mpState->setVao(pVao);
+       pRenderContext->draw(mpState.get(), mpVars.get(), 4, 0);
+   }
+
+    
 }
 
 void SDFRenderer::onShutdown()
@@ -214,7 +313,7 @@ Texture::SharedPtr SDFRenderer::generateTexture(RenderContext* pRenderContext) {
 
     if (textureOrder == 1) {
         getPseudoInverse();
-        comp.allocateStructuredBuffer("x0", 108, x0, sizeof(float) * 108);
+        comp.allocateStructuredBuffer("x0", 108, x0->data(), sizeof(float) * 108);
 
     }
 
@@ -233,10 +332,10 @@ void SDFRenderer::getPseudoInverse() {
 
                 float3 x = float3(i, j, k) * 2.0f / (float)res * 0.6f;
 
-                m((i + 1) * 9 + (j + 1) * 3 + (k + 1),0) = 1.0;
-                m((i + 1) * 9 + (j + 1) * 3 + (k + 1),1) = x.x;
-                m((i + 1) * 9 + (j + 1) * 3 + (k + 1),2) = x.y;
-                m((i + 1) * 9 + (j + 1) * 3 + (k + 1),3) = x.z;
+                m((i + 1) * 9 + (j + 1) * 3 + (k + 1),0) = x.x;
+                m((i + 1) * 9 + (j + 1) * 3 + (k + 1),1) = x.y;
+                m((i + 1) * 9 + (j + 1) * 3 + (k + 1),2) = x.z;
+                m((i + 1) * 9 + (j + 1) * 3 + (k + 1),3) = 1.0;
                 
             }
         }
@@ -245,11 +344,10 @@ void SDFRenderer::getPseudoInverse() {
   
 
     Eigen::MatrixXf result = (m.transpose()*m).inverse() * m.transpose();
-    //std::cout << result << std::endl;
 
     for (int i = 0; i < 4; i++) {
         for (int j = 0; j < 27; j++) {
-            x0[i * 27 + j] = result(i, j);
+            x0->push_back(result(i, j));
         }
     }
 }

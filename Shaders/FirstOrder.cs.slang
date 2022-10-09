@@ -6,7 +6,6 @@ RWStructuredBuffer<float> x0;
 cbuffer csCb
 {
     int sdf;
-    float3 boundingBox;
     int res;
 };
 
@@ -57,8 +56,8 @@ void main(uint3 threadId : SV_DispatchThreadID)
         ai[l] = aa;
     }
 
-    float n = sqrt(ai.r * ai.r + ai.g * ai.g + ai.b * ai.b);
+    //float n = sqrt(ai.r * ai.r + ai.g * ai.g + ai.b * ai.b);
     
-    tex3D_uav[threadId.xyz] = float4(ai.rgba / n);
+    tex3D_uav[threadId.xyz] = float4(ai.rgba);
 
 }
