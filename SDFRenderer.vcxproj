@@ -28,6 +28,7 @@
     <ShaderSource Include="Shaders\SDFRenderer.ps.slang" />
     <ShaderSource Include="Shaders\SDFRenderer.vs.slang" />
     <ShaderSource Include="Shaders\SDFTexture.cs.slang" />
+    <ShaderSource Include="teapot.slang" />
     <ShaderSource Include="Utils\Ray.hlsl" />
     <ShaderSource Include="Utils\sdf.hlsl" />
   </ItemGroup>

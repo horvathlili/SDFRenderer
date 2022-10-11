@@ -27,6 +27,9 @@
     <ShaderSource Include="Shaders\FirstOrder.cs.slang">
       <Filter>Shaders</Filter>
     </ShaderSource>
+    <ShaderSource Include="teapot.slang">
+      <Filter>Utils</Filter>
+    </ShaderSource>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Shaders">

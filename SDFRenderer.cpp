@@ -4,10 +4,7 @@
 FALCOR_EXPORT_D3D12_AGILITY_SDK
 #endif
 
-
-void SDFRenderer::onGuiRender(Gui* pGui)
-{
-    Gui::Window w(pGui, "debug", { 300, 150 }, { 10, 90 });
+void SDFRenderer::setUpGui() {
     Gui::RadioButton sphere;
     sphere.label = "Sphere";
     sphere.buttonID = 1;
@@ -17,16 +14,13 @@ void SDFRenderer::onGuiRender(Gui* pGui)
     Gui::RadioButton box;
     box.label = "Box";
     box.buttonID = 3;
-    Gui::RadioButtonGroup bg;
+    Gui::RadioButton teapot;
+    teapot.label = "Teapot";
+    teapot.buttonID = 4;
     bg.push_back(sphere);
     bg.push_back(torus);
     bg.push_back(box);
-
-    if (w.radioButtons(bg, sdf))
-        retexture = true;
-
-    if (w.slider("resolution", res, 10, 256))
-        retexture = true;
+    bg.push_back(teapot);
 
     Gui::RadioButton tex16;
     tex16.label = "16 bit";
@@ -34,15 +28,8 @@ void SDFRenderer::onGuiRender(Gui* pGui)
     Gui::RadioButton tex32;
     tex32.label = "32 bit";
     tex32.buttonID = 2;
-
-    Gui::RadioButtonGroup texsize;
     texsize.push_back(tex16);
     texsize.push_back(tex32);
-
-    w.separator();
-
-    if (w.radioButtons(texsize, texturesize))
-        retexture = true;
 
     Gui::RadioButton tex0;
     tex0.label = "order 0";
@@ -50,12 +37,27 @@ void SDFRenderer::onGuiRender(Gui* pGui)
     Gui::RadioButton tex1;
     tex1.label = "order 1";
     tex1.buttonID = 1;
-
-    Gui::RadioButtonGroup texorder;
     texorder.push_back(tex0);
     texorder.push_back(tex1);
+}
 
-    w.separator();
+void SDFRenderer::onGuiRender(Gui* pGui)
+{
+    Gui::Window w(pGui, "debug", { 350, 200 }, { 10, 90 });
+    
+
+    if (w.radioButtons(bg, sdf))
+        retexture = true;
+
+    if (w.slider("resolution", res, 10, 256))
+        retexture = true;
+
+   w.separator();
+
+    if (w.radioButtons(texsize, texturesize))
+        retexture = true;
+
+   w.separator();
 
     if (w.radioButtons(texorder, textureOrder))
         retexture = true;
@@ -213,6 +215,8 @@ void SDFRenderer::onLoad(RenderContext* pRenderContext)
     sdfTexture = generateTexture(pRenderContext);
    
     mpVars["mSampler"] = mpSampler;
+
+    setUpGui();
 }
 
 bool SDFRenderer::isOutOfBox(float3 pos)

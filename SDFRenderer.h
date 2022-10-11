@@ -17,6 +17,7 @@ public:
     bool onMouseEvent(const MouseEvent& mouseEvent) override;
     void onHotReload(HotReloadFlags reloaded) override;
     void onGuiRender(Gui* pGui) override;
+    void setUpGui();
 
 private:
 
@@ -67,6 +68,12 @@ private:
 
     std::vector<float> x0[108];
     void getPseudoInverse();
+
+
+    //gui
+    Gui::RadioButtonGroup bg;
+    Gui::RadioButtonGroup texsize;
+    Gui::RadioButtonGroup texorder;
 
 
 };
