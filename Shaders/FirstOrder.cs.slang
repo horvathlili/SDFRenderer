@@ -7,6 +7,7 @@ cbuffer csCb
 {
     int sdf;
     int res;
+    float boundingBox;
 };
 
 float getDist(float3 pos)

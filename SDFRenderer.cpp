@@ -60,7 +60,8 @@ void SDFRenderer::onGuiRender(Gui* pGui)
     if (w.radioButtons(texorder, textureOrder))
         retexture = true;
 
-   // w.slider("boundingBox", boundingbox, 2,20);
+    if (w.slider("boundingBox", boundingbox, 2, 20))
+        retexture = true;
 }
 
 
@@ -216,9 +217,10 @@ void SDFRenderer::onLoad(RenderContext* pRenderContext)
 
 bool SDFRenderer::isOutOfBox(float3 pos)
 {
-    bool r = (pos.x > -1.0 && pos.x < 1.0 &&
-        pos.y > -1.0 && pos.y < 1.0 &&
-        pos.z > -1.0 && pos.z < 1.0);
+    float b = (float)boundingbox;
+    bool r = (pos.x > -b/2.0 && pos.x < b/2.0 &&
+        pos.y > -b/2.0 && pos.y < b/2.0 &&
+        pos.z > -b/2.0 && pos.z < b/2.0);
 
     return !r;
 
@@ -249,8 +251,9 @@ void SDFRenderer::onFrameRender(RenderContext* pRenderContext, const Fbo::Shared
     mpVars["psCb"]["texorder"] = textureOrder;
     mpVars["psCb"]["box"] = isbox;
     mpVars["psCb"]["res"] = res;
+    mpVars["psCb"]["boundingBox"] = (float)boundingbox;
 
-    float4x4 m = glm::scale(float4x4(1.0), float3(2.0,2.0,2.0));
+    float4x4 m = glm::scale(float4x4(1.0), float3((float)boundingbox));
     mpVars["vsCb"]["model"] = m;
     mpVars["vsCb"]["viewproj"] = camera->getViewProjMatrix();
     mpVars["vsCb"]["box"] = isbox;
@@ -306,6 +309,7 @@ Texture::SharedPtr SDFRenderer::generateTexture(RenderContext* pRenderContext) {
     comp["tex3D_uav"].setUav(pTex->getUAV(0));
     comp["csCb"]["sdf"] = sdf;
     comp["csCb"]["res"] = res;
+    comp["csCb"]["boundingBox"] = (float)boundingbox;
 
     if (textureOrder == 1) {
         getPseudoInverse();
