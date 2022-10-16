@@ -51,8 +51,9 @@ private:
 
     ComputeProgramWrapper::SharedPtr mComputeProgram;
     ComputeProgramWrapper::SharedPtr mComputeProgramFirstOrder;
-    Texture::SharedPtr sdfTexture;
-    Texture::SharedPtr generateTexture(RenderContext* pRenderContext);
+    ComputeProgramWrapper::SharedPtr mComputeProgramA2;
+    std::vector<Texture::SharedPtr> sdfTextures;
+    std::vector<Texture::SharedPtr> generateTexture(RenderContext* pRenderContext);
     uint32_t textureOrder = 0;
 
     int res = 100;
@@ -66,8 +67,7 @@ private:
 
     DebugConsole console;
 
-    std::vector<float> x0[108];
-    void getPseudoInverse();
+    std::vector<float> x0;
 
 
     //gui

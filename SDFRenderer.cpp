@@ -1,4 +1,5 @@
 #include "SDFRenderer.h"
+#include "Utils/PseudoInverse.h"
 
 #if FALCOR_D3D12_AVAILABLE
 FALCOR_EXPORT_D3D12_AGILITY_SDK
@@ -37,8 +38,12 @@ void SDFRenderer::setUpGui() {
     Gui::RadioButton tex1;
     tex1.label = "order 1";
     tex1.buttonID = 1;
+    Gui::RadioButton texA2;
+    texA2.label = "Algebrai 2";
+    texA2.buttonID = 2;
     texorder.push_back(tex0);
     texorder.push_back(tex1);
+    texorder.push_back(texA2);
 }
 
 void SDFRenderer::onGuiRender(Gui* pGui)
@@ -204,6 +209,8 @@ void SDFRenderer::onLoad(RenderContext* pRenderContext)
     mComputeProgram->createProgram("Samples/SDFRenderer/Shaders/SDFTexture.cs.slang");
     mComputeProgramFirstOrder = ComputeProgramWrapper::create();
     mComputeProgramFirstOrder->createProgram("Samples/SDFRenderer/Shaders/FirstOrder.cs.slang");
+    mComputeProgramA2 = ComputeProgramWrapper::create();
+    mComputeProgramA2->createProgram("Samples/SDFRenderer/Shaders/A2.cs.slang");
 
 
     {
@@ -212,7 +219,7 @@ void SDFRenderer::onLoad(RenderContext* pRenderContext)
         mpSampler = Sampler::create(desc);
     }
 
-    sdfTexture = generateTexture(pRenderContext);
+    sdfTextures = generateTexture(pRenderContext);
    
     mpVars["mSampler"] = mpSampler;
 
@@ -233,11 +240,18 @@ bool SDFRenderer::isOutOfBox(float3 pos)
 void SDFRenderer::onFrameRender(RenderContext* pRenderContext, const Fbo::SharedPtr& pTargetFbo)
 {
     if (retexture) {
-        sdfTexture = generateTexture(pRenderContext);
+        sdfTextures = generateTexture(pRenderContext);
         retexture = false;
     }
     
-    mpVars["texture"] = sdfTexture;
+    mpVars["texture1"] = sdfTextures[0];
+
+    if (textureOrder == 2) {
+        mpVars["texture2"] = sdfTextures[1];
+        mpVars["texture3"] = sdfTextures[2];
+    }
+
+    
 
     mpState->setFbo(pTargetFbo);
     float4 clearColor = float4(0, 0, 0, 1);
@@ -297,65 +311,59 @@ void SDFRenderer::onResizeSwapChain(uint32_t width, uint32_t height)
     camera->setAspectRatio((float)width / (float)height);
 }
 
-Texture::SharedPtr SDFRenderer::generateTexture(RenderContext* pRenderContext) {
 
-    Texture::SharedPtr pTex = nullptr;
 
-    if (texturesize == 1)
-        pTex = Texture::create3D(res,res,res,ResourceFormat::RGBA16Float, 1 ,nullptr, ResourceBindFlags::ShaderResource | ResourceBindFlags::UnorderedAccess);
+std::vector<Texture::SharedPtr> SDFRenderer::generateTexture(RenderContext* pRenderContext) {
 
-    if (texturesize == 2)
-        pTex = Texture::create3D(res, res, res, ResourceFormat::RGBA32Float, 1, nullptr, ResourceBindFlags::ShaderResource | ResourceBindFlags::UnorderedAccess);
+    Texture::SharedPtr pTex1 = nullptr;
+    Texture::SharedPtr pTex2 = nullptr;
+    Texture::SharedPtr pTex3 = nullptr;
 
+    if (texturesize == 1) {
+        pTex1 = Texture::create3D(res, res, res, ResourceFormat::RGBA16Float, 1, nullptr, ResourceBindFlags::ShaderResource | ResourceBindFlags::UnorderedAccess);
+        pTex2 = Texture::create3D(res, res, res, ResourceFormat::RGBA16Float, 1, nullptr, ResourceBindFlags::ShaderResource | ResourceBindFlags::UnorderedAccess);
+        pTex3 = Texture::create3D(res, res, res, ResourceFormat::RGBA16Float, 1, nullptr, ResourceBindFlags::ShaderResource | ResourceBindFlags::UnorderedAccess);
+
+    }
+    if (texturesize == 2) {
+        pTex1 = Texture::create3D(res, res, res, ResourceFormat::RGBA32Float, 1, nullptr, ResourceBindFlags::ShaderResource | ResourceBindFlags::UnorderedAccess);
+        pTex2 = Texture::create3D(res, res, res, ResourceFormat::RGBA32Float, 1, nullptr, ResourceBindFlags::ShaderResource | ResourceBindFlags::UnorderedAccess);
+        pTex3 = Texture::create3D(res, res, res, ResourceFormat::RGBA32Float, 1, nullptr, ResourceBindFlags::ShaderResource | ResourceBindFlags::UnorderedAccess);
+    }
     
-    auto& comp = (textureOrder == 0) ? *mComputeProgram : *mComputeProgramFirstOrder;
-
-    comp["tex3D_uav"].setUav(pTex->getUAV(0));
+    auto& comp = textureOrder == 0 ? *mComputeProgram : (textureOrder == 1 ? *mComputeProgramFirstOrder : *mComputeProgramA2);
+   
+    comp["tex3D_uav1"].setUav(pTex1->getUAV(0));
     comp["csCb"]["sdf"] = sdf;
     comp["csCb"]["res"] = res;
     comp["csCb"]["boundingBox"] = (float)boundingbox;
 
     if (textureOrder == 1) {
-        getPseudoInverse();
-        comp.allocateStructuredBuffer("x0", 108, x0->data(), sizeof(float) * 108);
+        x0 = getPseudoInverse1(boundingbox,res);
+        comp.allocateStructuredBuffer("x0", 108, x0.data(), sizeof(float) * 108);
     }
+
+    if (textureOrder == 2) {
+        
+        comp["tex3D_uav2"].setUav(pTex2->getUAV(0));
+        comp["tex3D_uav3"].setUav(pTex3->getUAV(0));
+        x0 = getPseudoInverse2(boundingbox, res);
+        comp.allocateStructuredBuffer("x0", 270, x0.data(), sizeof(float) * 270);
+    }
+
 
     comp.runProgram(pRenderContext,res,res,res);
 
-    return pTex;
+    std::vector<Texture::SharedPtr> textures;
+    textures.push_back(pTex1);
+    textures.push_back(pTex2);
+    textures.push_back(pTex3);
+
+
+    return textures;
 }
 
-void SDFRenderer::getPseudoInverse() {
 
-    Eigen::MatrixXf m(27,4);
-
-    x0->clear();
-
-    for (int i = -1; i <= 1; i++) {
-        for (int j = -1; j <= 1; j++) {
-            for (int k = -1; k <= 1; k++) {
-
-                float3 x = float3(i, j, k) * 2.0f / (float)res * 0.6f;
-
-                m((i + 1) * 9 + (j + 1) * 3 + (k + 1),0) = x.x;
-                m((i + 1) * 9 + (j + 1) * 3 + (k + 1),1) = x.y;
-                m((i + 1) * 9 + (j + 1) * 3 + (k + 1),2) = x.z;
-                m((i + 1) * 9 + (j + 1) * 3 + (k + 1),3) = 1.0;
-                
-            }
-        }
-    }
-
-  
-
-    Eigen::MatrixXf result = (m.transpose()*m).inverse() * m.transpose();
-
-    for (int i = 0; i < 4; i++) {
-        for (int j = 0; j < 27; j++) {
-            x0->push_back(result(i, j));
-        }
-    }
-}
 
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nShowCmd)

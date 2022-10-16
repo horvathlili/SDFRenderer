@@ -17,6 +17,7 @@
   <ItemGroup>
     <ClInclude Include="ComputeProgramWrapper.h" />
     <ClInclude Include="SDFRenderer.h" />
+    <ClInclude Include="Utils\PseudoInverse.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Falcor\Falcor.vcxproj">
@@ -24,13 +25,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ShaderSource Include="Shaders\A2.cs.slang" />
     <ShaderSource Include="Shaders\FirstOrder.cs.slang" />
     <ShaderSource Include="Shaders\SDFRenderer.ps.slang" />
     <ShaderSource Include="Shaders\SDFRenderer.vs.slang" />
     <ShaderSource Include="Shaders\SDFTexture.cs.slang" />
-    <ShaderSource Include="teapot.slang" />
     <ShaderSource Include="Utils\Ray.hlsl" />
     <ShaderSource Include="Utils\sdf.hlsl" />
+    <ShaderSource Include="Utils\teapot.slang" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{6BE93358-53F7-48DD-AABA-00C6B152E8F9}</ProjectGuid>

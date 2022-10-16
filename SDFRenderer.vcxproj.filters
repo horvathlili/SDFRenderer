@@ -7,6 +7,9 @@
   <ItemGroup>
     <ClInclude Include="SDFRenderer.h" />
     <ClInclude Include="ComputeProgramWrapper.h" />
+    <ClInclude Include="Utils\PseudoInverse.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ShaderSource Include="Shaders\SDFRenderer.ps.slang">
@@ -27,8 +30,11 @@
     <ShaderSource Include="Shaders\FirstOrder.cs.slang">
       <Filter>Shaders</Filter>
     </ShaderSource>
-    <ShaderSource Include="teapot.slang">
+    <ShaderSource Include="Utils\teapot.slang">
       <Filter>Utils</Filter>
+    </ShaderSource>
+    <ShaderSource Include="Shaders\A2.cs.slang">
+      <Filter>Shaders</Filter>
     </ShaderSource>
   </ItemGroup>
   <ItemGroup>

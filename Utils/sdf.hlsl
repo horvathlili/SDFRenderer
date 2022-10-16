@@ -1,4 +1,4 @@
-#include "../teapot.slang"
+#include "teapot.slang"
 
 float sdSphere(float3 p, float s)
 {

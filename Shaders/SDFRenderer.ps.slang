@@ -22,7 +22,9 @@ cbuffer psCb
     bool box;
 };
 
-Texture3D texture;
+Texture3D texture1;
+Texture3D texture2;
+Texture3D texture3;
 SamplerState mSampler;
 
 bool isOutOfBox(float3 pos)
@@ -39,12 +41,21 @@ float get_texture(float3 uvw, float3 pos, int order)
 {
     if (order == 0)
    {
-        return texture.Sample(mSampler, uvw).r;
+        return texture1.Sample(mSampler, uvw).r;
     }
     if (order == 1)
     {     
-        float4 s = texture.Sample(mSampler, uvw);
+        float4 s = texture1.Sample(mSampler, uvw);
         return s.r*pos.x+s.g*pos.y+s.b*pos.z+s.a;
+    }
+    if (order == 2)
+    {
+        float4 s1 = texture1.Sample(mSampler, uvw);
+        float4 s2 = texture2.Sample(mSampler, uvw);
+        float4 s3 = texture3.Sample(mSampler, uvw);
+        return s1.r * pos.x + s1.g * pos.y + s1.b * pos.z
+             + s1.a * pos.x*pos.x + s2.r * pos.y*pos.y + s2.g * pos.z*pos.z
+             + s2.b * pos.x*pos.y*2 + s2.a*pos.x*pos.z*2 + s3.r*pos.y*pos.z*2 + s3.g;
     }
     return 0;
 }
@@ -53,9 +64,11 @@ float get_texture(float3 uvw, float3 pos, int order)
 float3 get_normal(float3 uvw, int order)
 {
     if (order == 0)
-        return texture.Sample(mSampler, uvw).gba;
+        return texture1.Sample(mSampler, uvw).gba;
     if (order == 1)
-        return texture.Sample(mSampler, uvw).rgb;
+        return texture1.Sample(mSampler, uvw).rgb;
+    if (order == 2)
+        return texture1.Sample(mSampler, uvw).rgb;
     return 0;
 }
 
@@ -81,7 +94,7 @@ float4 main(psIn input) : SV_TARGET
         for (i = 0; i < n; i++)
         {
             pos = r.p + t * r.v;
-        float h = get_texture(pos / float3(boundingBox + boundingBox/2.0/(float) res) + float3(0.5), pos/boundingBox*2.0, texorder) * boundingBox/2;
+        float h = get_texture(pos / float3(boundingBox + boundingBox/(float) res) + float3(0.5), pos, texorder);
         if (h < 0.0001 || isOutOfBox(pos))
                 break;
             t += h;
