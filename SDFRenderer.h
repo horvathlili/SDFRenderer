@@ -65,15 +65,24 @@ private:
 
     Sampler::SharedPtr mpSampler;
 
-    DebugConsole console;
-
-    std::vector<float> x0;
+   std::vector<float> x0;
 
 
     //gui
     Gui::RadioButtonGroup bg;
     Gui::RadioButtonGroup texsize;
     Gui::RadioButtonGroup texorder;
+    Gui::RadioButtonGroup function;
+    uint32_t func = 0;
 
+    void initFittingProgram();
+    GraphicsProgram::SharedPtr fittingProgram;
+    GraphicsVars::SharedPtr fittingVars;
+    GraphicsState::SharedPtr fittingState;
+    std::vector<float3> toruspoints;
+    int numberofpoints = 30;
+    bool newpoints = false;
+
+    DebugConsole console;
 
 };

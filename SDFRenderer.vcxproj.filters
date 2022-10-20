@@ -10,6 +10,7 @@
     <ClInclude Include="Utils\PseudoInverse.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="torusfitting.h" />
   </ItemGroup>
   <ItemGroup>
     <ShaderSource Include="Shaders\SDFRenderer.ps.slang">
@@ -34,6 +35,12 @@
       <Filter>Utils</Filter>
     </ShaderSource>
     <ShaderSource Include="Shaders\A2.cs.slang">
+      <Filter>Shaders</Filter>
+    </ShaderSource>
+    <ShaderSource Include="Shaders\TorusFitting.ps.slang">
+      <Filter>Shaders</Filter>
+    </ShaderSource>
+    <ShaderSource Include="Shaders\TorusFitting.vs.slang">
       <Filter>Shaders</Filter>
     </ShaderSource>
   </ItemGroup>

@@ -8,6 +8,12 @@ struct psIn
     float3 pixelpos : POSITION;
 };
 
+struct PsOut
+{
+    float4 col : SV_TARGET;
+    float depth : SV_Depth;
+};
+
 cbuffer psCb
 {
     float4 eye;
@@ -18,7 +24,7 @@ cbuffer psCb
     int texorder;
     int res;
     float boundingBox;
-
+    float4x4 viewproj;
     bool box;
 };
 
@@ -55,7 +61,7 @@ float get_texture(float3 uvw, float3 pos, int order)
         float4 s3 = texture3.Sample(mSampler, uvw);
         return s1.r * pos.x + s1.g * pos.y + s1.b * pos.z
              + s1.a * pos.x*pos.x + s2.r * pos.y*pos.y + s2.g * pos.z*pos.z
-             + s2.b * pos.x*pos.y*2 + s2.a*pos.x*pos.z*2 + s3.r*pos.y*pos.z*2 + s3.g;
+             + s2.b * pos.x*pos.y + s2.a*pos.x*pos.z + s3.r*pos.y*pos.z + s3.g;
     }
     return 0;
 }
@@ -72,8 +78,9 @@ float3 get_normal(float3 uvw, int order)
     return 0;
 }
 
-float4 main(psIn input) : SV_TARGET
+PsOut main(psIn input) : SV_TARGET
 {
+    PsOut o;
     Ray r;
     if (!box)
     {
@@ -102,7 +109,7 @@ float4 main(psIn input) : SV_TARGET
     
         if (i >= n || isOutOfBox(pos))
         {
-            return float4(0, 0, 0, 1);
+            o.col =  float4(0, 0, 0, 1);
         }
         else
         {
@@ -115,8 +122,13 @@ float4 main(psIn input) : SV_TARGET
             float3 light_dir = float3(-1, -1, -1);
         
             float3 ambient = La * Ka;
-        float3 diffuse = clamp(dot(normalize(-light_dir), get_normal(pos / boundingBox + 0.5, texorder)), 0, 1) * Ld * Kd;
+            float3 diffuse = clamp(dot(normalize(-light_dir), get_normal(pos / boundingBox + 0.5, texorder)), 0, 1) * Ld * Kd;
 
-            return float4(ambient + diffuse, 1);
+           o.col =  float4(ambient + diffuse, 1);
         }
+    
+    // calc fragment depth
+    float4 depth_vec = mul(float4(t * r.v + r.p, 1), viewproj);
+    o.depth = depth_vec.z / depth_vec.w;
+     return o;
 }

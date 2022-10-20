@@ -1,5 +1,6 @@
 #include "SDFRenderer.h"
 #include "Utils/PseudoInverse.h"
+#include "torusfitting.h"
 
 #if FALCOR_D3D12_AVAILABLE
 FALCOR_EXPORT_D3D12_AGILITY_SDK
@@ -44,31 +45,49 @@ void SDFRenderer::setUpGui() {
     texorder.push_back(tex0);
     texorder.push_back(tex1);
     texorder.push_back(texA2);
+
+    Gui::RadioButton dfs;
+    dfs.label = "distance fields";
+    dfs.buttonID = 0;
+    Gui::RadioButton tf;
+    tf.label = "torus fitting";
+    tf.buttonID = 1;
+    function.push_back(dfs);
+    function.push_back(tf);
 }
 
 void SDFRenderer::onGuiRender(Gui* pGui)
 {
+
     Gui::Window w(pGui, "debug", { 350, 200 }, { 10, 90 });
     
+    w.radioButtons(function, func);
+    w.separator();
 
-    if (w.radioButtons(bg, sdf))
-        retexture = true;
+    if (func == 0) {
+        if (w.radioButtons(bg, sdf))
+            retexture = true;
 
-    if (w.slider("resolution", res, 10, 256))
-        retexture = true;
+        if (w.slider("resolution", res, 10, 256))
+            retexture = true;
 
-   w.separator();
+        w.separator();
 
-    if (w.radioButtons(texsize, texturesize))
-        retexture = true;
+        if (w.radioButtons(texsize, texturesize))
+            retexture = true;
 
-   w.separator();
+        w.separator();
 
-    if (w.radioButtons(texorder, textureOrder))
-        retexture = true;
+        if (w.radioButtons(texorder, textureOrder))
+            retexture = true;
 
-    if (w.slider("boundingBox", boundingbox, 2, 20))
-        retexture = true;
+        if (w.slider("boundingBox", boundingbox, 2, 20))
+            retexture = true;
+    }
+    else {
+        if (w.slider("number of points", numberofpoints, 30, 300))
+            newpoints = true;
+    }
 }
 
 
@@ -179,6 +198,22 @@ void SDFRenderer::initCamera() {
     ccontrol->setCameraSpeed(1.0f);
 }
 
+void SDFRenderer::initFittingProgram() {
+    Program::Desc d1;
+
+    d1.addShaderLibrary("Samples/SDFRenderer/Shaders/TorusFitting.vs.slang").entryPoint(ShaderType::Vertex, "main");
+    d1.addShaderLibrary("Samples/SDFRenderer/Shaders/TorusFitting.ps.slang").entryPoint(ShaderType::Pixel, "main");
+
+    fittingProgram = GraphicsProgram::create(d1);
+    FALCOR_ASSERT(fittingProgram);
+
+    fittingState = GraphicsState::create();
+    fittingState->setProgram(fittingProgram);
+    FALCOR_ASSERT(fittingState);
+
+    fittingVars = GraphicsVars::create(fittingState->getProgram().get());
+}
+
 void SDFRenderer::onLoad(RenderContext* pRenderContext)
 {
     Program::Desc d;
@@ -193,9 +228,6 @@ void SDFRenderer::onLoad(RenderContext* pRenderContext)
     mpState->setProgram(mProgram);
     FALCOR_ASSERT(mpState);
 
-    auto pDsState = DepthStencilState::create(DepthStencilState::Desc().setDepthEnabled(false));
-    mpState->setDepthStencilState(pDsState);
-
     initData();
     initBox();
 
@@ -204,6 +236,8 @@ void SDFRenderer::onLoad(RenderContext* pRenderContext)
     initCamera();
 
     mpVars = GraphicsVars::create(mpState->getProgram().get());
+
+    initFittingProgram();
 
     mComputeProgram = ComputeProgramWrapper::create();
     mComputeProgram->createProgram("Samples/SDFRenderer/Shaders/SDFTexture.cs.slang");
@@ -224,6 +258,8 @@ void SDFRenderer::onLoad(RenderContext* pRenderContext)
     mpVars["mSampler"] = mpSampler;
 
     setUpGui();
+
+    toruspoints = getTorusPoints(numberofpoints, 0.3f, 1.0f);
 }
 
 bool SDFRenderer::isOutOfBox(float3 pos)
@@ -239,53 +275,83 @@ bool SDFRenderer::isOutOfBox(float3 pos)
 
 void SDFRenderer::onFrameRender(RenderContext* pRenderContext, const Fbo::SharedPtr& pTargetFbo)
 {
-    if (retexture) {
-        sdfTextures = generateTexture(pRenderContext);
-        retexture = false;
-    }
-    
-    mpVars["texture1"] = sdfTextures[0];
-
-    if (textureOrder == 2) {
-        mpVars["texture2"] = sdfTextures[1];
-        mpVars["texture3"] = sdfTextures[2];
-    }
-
-    
-
     mpState->setFbo(pTargetFbo);
+    fittingState->setFbo(pTargetFbo);
     float4 clearColor = float4(0, 0, 0, 1);
     pRenderContext->clearFbo(mpState->getFbo().get(), clearColor, 1.0f, 0);
+    pRenderContext->clearFbo(fittingState->getFbo().get(), clearColor, 1.0f, 0);
 
     ccontrol->update();
-    //kívül vagyunk-e a boundingboxon
-    isbox = isOutOfBox(camera->getPosition());
 
-    mpVars["psCb"]["eye"] = camera->getPosition();
-    mpVars["psCb"]["center"] = camera->getTarget();
-    mpVars["psCb"]["up"] = camera->getUpVector();
-    mpVars["psCb"]["ar"] = camera->getAspectRatio();
-    mpVars["psCb"]["sdf"] = sdf;
-    mpVars["psCb"]["texorder"] = textureOrder;
-    mpVars["psCb"]["box"] = isbox;
-    mpVars["psCb"]["res"] = res;
-    mpVars["psCb"]["boundingBox"] = (float)boundingbox;
+    if (func == 0) {
+        if (retexture) {
+            sdfTextures = generateTexture(pRenderContext);
+            retexture = false;
+        }
 
-    float4x4 m = glm::scale(float4x4(1.0), float3((float)boundingbox));
-    mpVars["vsCb"]["model"] = m;
-    mpVars["vsCb"]["viewproj"] = camera->getViewProjMatrix();
-    mpVars["vsCb"]["box"] = isbox;
+        float4x4 m = glm::scale(float4x4(1.0), float3((float)boundingbox));
 
-   if (isbox) {
-        mpState->setVao(cubeVao);
-        pRenderContext->draw(mpState.get(), mpVars.get(), 36, 0);
-   }
-   else {
-       mpState->setVao(pVao);
-       pRenderContext->draw(mpState.get(), mpVars.get(), 4, 0);
-   }
+        //sdf-ek
+        mpVars["texture1"] = sdfTextures[0];
 
-    
+        if (textureOrder == 2) {
+            mpVars["texture2"] = sdfTextures[1];
+            mpVars["texture3"] = sdfTextures[2];
+        }
+
+        //kívül vagyunk-e a boundingboxon
+        isbox = isOutOfBox(camera->getPosition());
+
+        mpVars["psCb"]["eye"] = camera->getPosition();
+        mpVars["psCb"]["center"] = camera->getTarget();
+        mpVars["psCb"]["up"] = camera->getUpVector();
+        mpVars["psCb"]["ar"] = camera->getAspectRatio();
+        mpVars["psCb"]["sdf"] = sdf;
+        mpVars["psCb"]["texorder"] = textureOrder;
+        mpVars["psCb"]["box"] = isbox;
+        mpVars["psCb"]["res"] = res;
+        mpVars["psCb"]["boundingBox"] = (float)boundingbox;
+        mpVars["psCb"]["viewproj"] = camera->getViewProjMatrix();
+
+
+        mpVars["vsCb"]["model"] = m;
+        mpVars["vsCb"]["viewproj"] = camera->getViewProjMatrix();
+        mpVars["vsCb"]["box"] = isbox;
+
+        if (isbox) {
+            mpState->setVao(cubeVao);
+            pRenderContext->draw(mpState.get(), mpVars.get(), 36, 0);
+        }
+        else {
+            mpState->setVao(pVao);
+            pRenderContext->draw(mpState.get(), mpVars.get(), 4, 0);
+        }
+    }
+    else {
+        //tóruszillesztés
+        if (newpoints) {
+            toruspoints = getNewPoints(numberofpoints);
+            newpoints = false;
+        }
+
+        Buffer::SharedPtr pBuffer = Buffer::createStructured(fittingState->getProgram().get(), "points", numberofpoints);
+        pBuffer->setBlob(toruspoints.data(),0, numberofpoints*sizeof(float3));
+        
+        float4x4 m = glm::scale(float4x4(1.0), float3((float)boundingbox));
+        fittingVars["vsCb"]["model"] = m;
+        fittingVars["vsCb"]["viewproj"] = camera->getViewProjMatrix();
+        fittingVars["vsCb"]["box"] = isbox;
+        fittingVars["psCb"]["eye"] = camera->getPosition();
+        fittingVars["psCb"]["center"] = camera->getTarget();
+        fittingVars["psCb"]["up"] = camera->getUpVector();
+        fittingVars["psCb"]["ar"] = camera->getAspectRatio();
+        fittingVars["psCb"]["n"] = numberofpoints;
+
+        fittingVars->setBuffer("points", pBuffer);
+        
+        fittingState->setVao(pVao);
+        pRenderContext->draw(fittingState.get(), fittingVars.get(), 4, 0);
+    }
 }
 
 void SDFRenderer::onShutdown()
