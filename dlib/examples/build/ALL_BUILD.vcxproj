@@ -1,0 +1,604 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ResolveNugetPackages>false</ResolveNugetPackages>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{7C594917-93BE-315B-A863-8C1312789A32}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+    <Platform>x64</Platform>
+    <ProjectName>ALL_BUILD</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\CMakeLists.txt">
+      <UseUtf8Encoding>Always</UseUtf8Encoding>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/tdk/Falcor/Source/Samples/SDFRenderer/dlib/examples/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/tdk/Falcor/Source/Samples/SDFRenderer/dlib/examples -BC:/tdk/Falcor/Source/Samples/SDFRenderer/dlib/examples/build --check-stamp-file C:/tdk/Falcor/Source/Samples/SDFRenderer/dlib/examples/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeCCompilerABI.c;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeCXXCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeCXXCompilerABI.cpp;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeCompilerIdDetection.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeDetermineCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeDetermineCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeDetermineCompileFeatures.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeDetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeDetermineCompilerABI.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeDetermineCompilerId.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeDetermineRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeDetermineSystem.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeFindBinUtils.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeParseImplicitIncludeInfo.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeParseImplicitLinkInfo.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeParseLibraryArchitecture.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeRCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeSystem.cmake.in;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeTestCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeTestCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeTestCompilerCommon.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeTestRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\ADSP-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\ARMCC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\ARMClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\AppleClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\Borland-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\Bruce-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\Clang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\Clang-DetermineCompilerInternal.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\Comeau-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\Compaq-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\Compaq-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\Cray-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\Embarcadero-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\Fujitsu-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\FujitsuClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\GHS-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\GNU-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\GNU-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\HP-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\HP-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\IAR-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\IBMCPP-C-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\IBMCPP-CXX-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\IBMClang-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\IBMClang-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\Intel-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\IntelLLVM-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\LCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\LCC-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\MSVC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\NVHPC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\NVIDIA-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\OpenWatcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\PGI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\PathScale-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\SCO-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\SDCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\SunPro-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\SunPro-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\TI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\TinyCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\VisualAge-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\VisualAge-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\Watcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\XL-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\XL-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\XLClang-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\XLClang-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\zOS-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\zOS-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CompilerId\VS-10.vcxproj.in;C:\Program Files\CMake\share\cmake-3.24\Modules\Internal\FeatureTesting.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Platform\Windows-Determine-CXX.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Platform\WindowsPaths.cmake;C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\CMakeFiles\3.24.1\CMakeCCompiler.cmake;C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\CMakeFiles\3.24.1\CMakeCXXCompiler.cmake;C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\CMakeFiles\3.24.1\CMakeRCCompiler.cmake;C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\CMakeFiles\3.24.1\CMakeSystem.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/tdk/Falcor/Source/Samples/SDFRenderer/dlib/examples/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/tdk/Falcor/Source/Samples/SDFRenderer/dlib/examples -BC:/tdk/Falcor/Source/Samples/SDFRenderer/dlib/examples/build --check-stamp-file C:/tdk/Falcor/Source/Samples/SDFRenderer/dlib/examples/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeCCompilerABI.c;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeCXXCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeCXXCompilerABI.cpp;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeCompilerIdDetection.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeDetermineCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeDetermineCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeDetermineCompileFeatures.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeDetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeDetermineCompilerABI.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeDetermineCompilerId.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeDetermineRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeDetermineSystem.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeFindBinUtils.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeParseImplicitIncludeInfo.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeParseImplicitLinkInfo.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeParseLibraryArchitecture.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeRCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeSystem.cmake.in;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeTestCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeTestCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeTestCompilerCommon.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeTestRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\ADSP-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\ARMCC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\ARMClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\AppleClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\Borland-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\Bruce-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\Clang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\Clang-DetermineCompilerInternal.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\Comeau-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\Compaq-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\Compaq-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\Cray-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\Embarcadero-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\Fujitsu-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\FujitsuClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\GHS-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\GNU-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\GNU-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\HP-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\HP-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\IAR-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\IBMCPP-C-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\IBMCPP-CXX-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\IBMClang-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\IBMClang-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\Intel-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\IntelLLVM-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\LCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\LCC-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\MSVC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\NVHPC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\NVIDIA-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\OpenWatcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\PGI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\PathScale-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\SCO-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\SDCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\SunPro-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\SunPro-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\TI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\TinyCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\VisualAge-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\VisualAge-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\Watcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\XL-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\XL-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\XLClang-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\XLClang-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\zOS-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\zOS-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CompilerId\VS-10.vcxproj.in;C:\Program Files\CMake\share\cmake-3.24\Modules\Internal\FeatureTesting.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Platform\Windows-Determine-CXX.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Platform\WindowsPaths.cmake;C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\CMakeFiles\3.24.1\CMakeCCompiler.cmake;C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\CMakeFiles\3.24.1\CMakeCXXCompiler.cmake;C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\CMakeFiles\3.24.1\CMakeRCCompiler.cmake;C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\CMakeFiles\3.24.1\CMakeSystem.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule C:/tdk/Falcor/Source/Samples/SDFRenderer/dlib/examples/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/tdk/Falcor/Source/Samples/SDFRenderer/dlib/examples -BC:/tdk/Falcor/Source/Samples/SDFRenderer/dlib/examples/build --check-stamp-file C:/tdk/Falcor/Source/Samples/SDFRenderer/dlib/examples/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeCCompilerABI.c;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeCXXCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeCXXCompilerABI.cpp;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeCompilerIdDetection.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeDetermineCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeDetermineCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeDetermineCompileFeatures.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeDetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeDetermineCompilerABI.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeDetermineCompilerId.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeDetermineRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeDetermineSystem.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeFindBinUtils.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeParseImplicitIncludeInfo.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeParseImplicitLinkInfo.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeParseLibraryArchitecture.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeRCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeSystem.cmake.in;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeTestCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeTestCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeTestCompilerCommon.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeTestRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\ADSP-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\ARMCC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\ARMClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\AppleClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\Borland-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\Bruce-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\Clang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\Clang-DetermineCompilerInternal.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\Comeau-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\Compaq-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\Compaq-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\Cray-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\Embarcadero-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\Fujitsu-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\FujitsuClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\GHS-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\GNU-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\GNU-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\HP-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\HP-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\IAR-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\IBMCPP-C-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\IBMCPP-CXX-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\IBMClang-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\IBMClang-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\Intel-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\IntelLLVM-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\LCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\LCC-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\MSVC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\NVHPC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\NVIDIA-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\OpenWatcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\PGI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\PathScale-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\SCO-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\SDCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\SunPro-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\SunPro-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\TI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\TinyCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\VisualAge-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\VisualAge-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\Watcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\XL-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\XL-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\XLClang-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\XLClang-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\zOS-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\zOS-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CompilerId\VS-10.vcxproj.in;C:\Program Files\CMake\share\cmake-3.24\Modules\Internal\FeatureTesting.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Platform\Windows-Determine-CXX.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Platform\WindowsPaths.cmake;C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\CMakeFiles\3.24.1\CMakeCCompiler.cmake;C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\CMakeFiles\3.24.1\CMakeCXXCompiler.cmake;C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\CMakeFiles\3.24.1\CMakeRCCompiler.cmake;C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\CMakeFiles\3.24.1\CMakeSystem.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule C:/tdk/Falcor/Source/Samples/SDFRenderer/dlib/examples/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/tdk/Falcor/Source/Samples/SDFRenderer/dlib/examples -BC:/tdk/Falcor/Source/Samples/SDFRenderer/dlib/examples/build --check-stamp-file C:/tdk/Falcor/Source/Samples/SDFRenderer/dlib/examples/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeCCompilerABI.c;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeCXXCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeCXXCompilerABI.cpp;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeCompilerIdDetection.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeDetermineCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeDetermineCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeDetermineCompileFeatures.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeDetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeDetermineCompilerABI.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeDetermineCompilerId.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeDetermineRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeDetermineSystem.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeFindBinUtils.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeParseImplicitIncludeInfo.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeParseImplicitLinkInfo.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeParseLibraryArchitecture.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeRCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeSystem.cmake.in;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeTestCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeTestCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeTestCompilerCommon.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeTestRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\ADSP-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\ARMCC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\ARMClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\AppleClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\Borland-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\Bruce-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\Clang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\Clang-DetermineCompilerInternal.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\Comeau-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\Compaq-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\Compaq-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\Cray-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\Embarcadero-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\Fujitsu-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\FujitsuClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\GHS-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\GNU-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\GNU-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\HP-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\HP-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\IAR-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\IBMCPP-C-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\IBMCPP-CXX-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\IBMClang-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\IBMClang-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\Intel-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\IntelLLVM-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\LCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\LCC-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\MSVC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\NVHPC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\NVIDIA-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\OpenWatcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\PGI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\PathScale-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\SCO-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\SDCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\SunPro-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\SunPro-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\TI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\TinyCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\VisualAge-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\VisualAge-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\Watcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\XL-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\XL-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\XLClang-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\XLClang-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\zOS-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Compiler\zOS-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CompilerId\VS-10.vcxproj.in;C:\Program Files\CMake\share\cmake-3.24\Modules\Internal\FeatureTesting.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Platform\Windows-Determine-CXX.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Platform\WindowsPaths.cmake;C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\CMakeFiles\3.24.1\CMakeCCompiler.cmake;C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\CMakeFiles\3.24.1\CMakeCXXCompiler.cmake;C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\CMakeFiles\3.24.1\CMakeRCCompiler.cmake;C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\CMakeFiles\3.24.1\CMakeSystem.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\ZERO_CHECK.vcxproj">
+      <Project>{4AC11D38-24C9-3FA3-B722-0143EC21F15E}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\3d_point_cloud_ex.vcxproj">
+      <Project>{F1AB7E5F-AC82-3B39-BFC4-9784A2C492E9}</Project>
+      <Name>3d_point_cloud_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\assignment_learning_ex.vcxproj">
+      <Project>{79581292-9B3A-323F-98C0-6FDB37BDA271}</Project>
+      <Name>assignment_learning_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\bayes_net_ex.vcxproj">
+      <Project>{DCA68B7A-9E3E-33AE-AE86-CB992C49ABBC}</Project>
+      <Name>bayes_net_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\bayes_net_from_disk_ex.vcxproj">
+      <Project>{DD81C2FD-B129-3CBB-A2AA-6755B44855A1}</Project>
+      <Name>bayes_net_from_disk_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\bayes_net_gui_ex.vcxproj">
+      <Project>{17866BE8-0DDD-39AC-936C-69D23B549CA0}</Project>
+      <Name>bayes_net_gui_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\bridge_ex.vcxproj">
+      <Project>{0801E148-8552-3B7E-ADB6-3A9511C7BF2E}</Project>
+      <Name>bridge_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\bsp_ex.vcxproj">
+      <Project>{D346EF20-108A-3CAC-A124-4108FF578A52}</Project>
+      <Name>bsp_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\compress_stream_ex.vcxproj">
+      <Project>{3C151276-AF4D-3A60-B566-6222EFED6E3A}</Project>
+      <Name>compress_stream_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\config_reader_ex.vcxproj">
+      <Project>{60AED9AC-6E39-3306-A19F-964F33CFB30B}</Project>
+      <Name>config_reader_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\custom_trainer_ex.vcxproj">
+      <Project>{D5DDDF8F-9454-3FF4-B7E6-C1E1FF3DD697}</Project>
+      <Name>custom_trainer_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\dir_nav_ex.vcxproj">
+      <Project>{D2FC3839-AB03-361E-BA1D-B7BFF4685EC9}</Project>
+      <Name>dir_nav_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\dlib_build\dlib.vcxproj">
+      <Project>{91B32A59-F629-374E-8684-BF648E3FA59A}</Project>
+      <Name>dlib</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\dnn_dcgan_train_ex.vcxproj">
+      <Project>{C940C801-59DC-3ED7-B392-F01007E9D8CE}</Project>
+      <Name>dnn_dcgan_train_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\dnn_face_recognition_ex.vcxproj">
+      <Project>{F4241AFB-9009-31FC-9293-68C1715DCB8C}</Project>
+      <Name>dnn_face_recognition_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\dnn_imagenet_ex.vcxproj">
+      <Project>{82157997-18B1-3FF4-AFDC-B6C0D40FA982}</Project>
+      <Name>dnn_imagenet_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\dnn_imagenet_train_ex.vcxproj">
+      <Project>{6D6DEA8B-2062-36DB-B0E7-9C22FB59B877}</Project>
+      <Name>dnn_imagenet_train_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\dnn_inception_ex.vcxproj">
+      <Project>{88290343-B3F2-337A-B148-646B000923E8}</Project>
+      <Name>dnn_inception_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\dnn_instance_segmentation_ex.vcxproj">
+      <Project>{E13B14C0-E19E-3460-946F-3087AEF13AE1}</Project>
+      <Name>dnn_instance_segmentation_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\dnn_instance_segmentation_train_ex.vcxproj">
+      <Project>{72C31777-820D-3FC5-A989-4FE180EDCEB1}</Project>
+      <Name>dnn_instance_segmentation_train_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\dnn_introduction2_ex.vcxproj">
+      <Project>{E749EFA3-A9DC-3CE5-BCC4-DFBB797EF409}</Project>
+      <Name>dnn_introduction2_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\dnn_introduction3_ex.vcxproj">
+      <Project>{5EE5BF61-51EF-3C02-9BFF-E0C740AA9511}</Project>
+      <Name>dnn_introduction3_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\dnn_introduction_ex.vcxproj">
+      <Project>{290AF081-2CB5-37AC-9F48-1B86BEE449B4}</Project>
+      <Name>dnn_introduction_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\dnn_metric_learning_ex.vcxproj">
+      <Project>{FD4539CE-20F6-32F6-956B-D348CBAC9DCF}</Project>
+      <Name>dnn_metric_learning_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\dnn_metric_learning_on_images_ex.vcxproj">
+      <Project>{8D5165A0-B47A-3227-876E-A29D045CE8B5}</Project>
+      <Name>dnn_metric_learning_on_images_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\dnn_mmod_dog_hipsterizer.vcxproj">
+      <Project>{B0A7FFE0-FB58-37FF-8BFC-C5518D26FB11}</Project>
+      <Name>dnn_mmod_dog_hipsterizer</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\dnn_mmod_ex.vcxproj">
+      <Project>{FE1FCFC2-2549-38DB-A0F0-79AB1734DB7B}</Project>
+      <Name>dnn_mmod_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\dnn_mmod_face_detection_ex.vcxproj">
+      <Project>{8B8AC524-CC26-3A02-93AA-E170D245D780}</Project>
+      <Name>dnn_mmod_face_detection_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\dnn_mmod_find_cars2_ex.vcxproj">
+      <Project>{D8FB28ED-7F60-3CFB-A472-7AE61C1BF197}</Project>
+      <Name>dnn_mmod_find_cars2_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\dnn_mmod_find_cars_ex.vcxproj">
+      <Project>{4E8C53B2-53FD-34E3-B645-AB4F12F0C0DF}</Project>
+      <Name>dnn_mmod_find_cars_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\dnn_mmod_train_find_cars_ex.vcxproj">
+      <Project>{938C4D42-670F-32C6-9D9F-2D31F41831EB}</Project>
+      <Name>dnn_mmod_train_find_cars_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\dnn_self_supervised_learning_ex.vcxproj">
+      <Project>{F522BF73-5334-3309-AEF6-CCAD63150CA7}</Project>
+      <Name>dnn_self_supervised_learning_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\dnn_semantic_segmentation_ex.vcxproj">
+      <Project>{A61EA04A-50F1-3D8D-8BB2-0F2FDF0A6773}</Project>
+      <Name>dnn_semantic_segmentation_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\dnn_semantic_segmentation_train_ex.vcxproj">
+      <Project>{0FA32B88-A9B0-305B-BB7B-BC91E72ADB15}</Project>
+      <Name>dnn_semantic_segmentation_train_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\dnn_yolo_train_ex.vcxproj">
+      <Project>{5A15065C-88C4-3A8E-B93A-AADC2903AA42}</Project>
+      <Name>dnn_yolo_train_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\empirical_kernel_map_ex.vcxproj">
+      <Project>{D29F60EB-70BE-3D5C-869E-E5721D09170C}</Project>
+      <Name>empirical_kernel_map_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\face_detection_ex.vcxproj">
+      <Project>{00F19960-648E-382B-B73C-2084DE83FA9D}</Project>
+      <Name>face_detection_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\face_landmark_detection_ex.vcxproj">
+      <Project>{049E7FF6-BD13-3C45-9ACC-B4E51FF34BDB}</Project>
+      <Name>face_landmark_detection_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\fhog_ex.vcxproj">
+      <Project>{2642F31B-B1FE-3F28-8C63-66BEEA385627}</Project>
+      <Name>fhog_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\fhog_object_detector_ex.vcxproj">
+      <Project>{CF94BFCF-907B-3C7B-85DC-1AE795CD35DB}</Project>
+      <Name>fhog_object_detector_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\file_to_code_ex.vcxproj">
+      <Project>{9CFD65F5-EA3C-3430-8ED3-B93F789CBC7F}</Project>
+      <Name>file_to_code_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\graph_labeling_ex.vcxproj">
+      <Project>{8E1C027D-20A0-3077-942D-AF26ACA2D1A1}</Project>
+      <Name>graph_labeling_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\gui_api_ex.vcxproj">
+      <Project>{092060AD-9444-3A99-8E3F-BE60A53EBD29}</Project>
+      <Name>gui_api_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\hough_transform_ex.vcxproj">
+      <Project>{56C839C7-4CDF-3BD4-9D69-3496B0F6E8A2}</Project>
+      <Name>hough_transform_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\image_ex.vcxproj">
+      <Project>{0B862A36-B16F-356E-BB50-65D265D07010}</Project>
+      <Name>image_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\integrate_function_adapt_simp_ex.vcxproj">
+      <Project>{3C4381B8-5358-398D-B2F8-D5FB2CE61377}</Project>
+      <Name>integrate_function_adapt_simp_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\iosockstream_ex.vcxproj">
+      <Project>{9DBAF1DF-8D50-3F27-BB3B-3FAD5ED316A4}</Project>
+      <Name>iosockstream_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\kcentroid_ex.vcxproj">
+      <Project>{8AD871D2-E992-3F35-8384-BF54F331C137}</Project>
+      <Name>kcentroid_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\kkmeans_ex.vcxproj">
+      <Project>{C11B3D18-254C-3DDA-A8C7-7B3615D9EEEB}</Project>
+      <Name>kkmeans_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\krls_ex.vcxproj">
+      <Project>{6E4E41E8-33B9-3037-BCE0-2B46FC12F6F0}</Project>
+      <Name>krls_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\krls_filter_ex.vcxproj">
+      <Project>{C4188C0D-FC12-38DD-A4B0-6DC90E78C790}</Project>
+      <Name>krls_filter_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\krr_classification_ex.vcxproj">
+      <Project>{A603F90E-A91E-358B-8FA2-741216C89127}</Project>
+      <Name>krr_classification_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\krr_regression_ex.vcxproj">
+      <Project>{BC3750C1-A057-3277-AEAB-9A461C5A0517}</Project>
+      <Name>krr_regression_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\learning_to_track_ex.vcxproj">
+      <Project>{4BE42EB8-2E0B-3B1A-81CB-DA85485B5383}</Project>
+      <Name>learning_to_track_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\least_squares_ex.vcxproj">
+      <Project>{8F18EE32-5643-3EC7-AD5A-1E00F7AA32F4}</Project>
+      <Name>least_squares_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\linear_manifold_regularizer_ex.vcxproj">
+      <Project>{D3991BF6-276F-343A-B151-29927CCC5ECA}</Project>
+      <Name>linear_manifold_regularizer_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\logger_custom_output_ex.vcxproj">
+      <Project>{68972C09-69B3-3E92-85FD-820D12496AC5}</Project>
+      <Name>logger_custom_output_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\logger_ex.vcxproj">
+      <Project>{B5372C9C-EA07-3D2C-9B71-01FCFC0A5B6C}</Project>
+      <Name>logger_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\logger_ex_2.vcxproj">
+      <Project>{C190F871-2402-36F9-98E5-84FDB04C62E6}</Project>
+      <Name>logger_ex_2</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\matrix_ex.vcxproj">
+      <Project>{53249A1A-ACBE-38B1-B623-6AA2586278F0}</Project>
+      <Name>matrix_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\matrix_expressions_ex.vcxproj">
+      <Project>{6B50A4BF-18D1-378C-A743-9591DCEDB1D8}</Project>
+      <Name>matrix_expressions_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\max_cost_assignment_ex.vcxproj">
+      <Project>{604BDF98-8921-3750-8542-04D4BA2AB74E}</Project>
+      <Name>max_cost_assignment_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\member_function_pointer_ex.vcxproj">
+      <Project>{302CD68C-2997-364F-970D-AF25BC96348A}</Project>
+      <Name>member_function_pointer_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\mlp_ex.vcxproj">
+      <Project>{9819B7A1-931C-3F6D-BAD7-D50595A4D371}</Project>
+      <Name>mlp_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\model_selection_ex.vcxproj">
+      <Project>{4E21EAA7-9AB1-3FF9-AE98-96954B915319}</Project>
+      <Name>model_selection_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\mpc_ex.vcxproj">
+      <Project>{BE8C53AF-3C95-3C70-ADC1-7581D574CD85}</Project>
+      <Name>mpc_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\multiclass_classification_ex.vcxproj">
+      <Project>{5947325E-F136-3C3F-A4B4-4F9F100F106F}</Project>
+      <Name>multiclass_classification_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\multithreaded_object_ex.vcxproj">
+      <Project>{D82F94D1-2D71-33FD-B231-C2A4F1C2FA3E}</Project>
+      <Name>multithreaded_object_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\object_detector_advanced_ex.vcxproj">
+      <Project>{16BCEF9C-BB25-3EB0-8532-8CF4DC5C056C}</Project>
+      <Name>object_detector_advanced_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\object_detector_ex.vcxproj">
+      <Project>{65BF5DA3-1D7D-36D4-9454-F372715F725A}</Project>
+      <Name>object_detector_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\one_class_classifiers_ex.vcxproj">
+      <Project>{CEB60DF3-EE4F-3D9F-BF3C-518161C94C4C}</Project>
+      <Name>one_class_classifiers_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\optimization_ex.vcxproj">
+      <Project>{39E5F72B-BC29-3BD2-8A73-FADBFE51F3B9}</Project>
+      <Name>optimization_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\parallel_for_ex.vcxproj">
+      <Project>{14880C52-00AB-30A1-9F6C-454D8A785269}</Project>
+      <Name>parallel_for_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\pipe_ex.vcxproj">
+      <Project>{02BA7548-9646-3736-8FCB-3820DFA6DC66}</Project>
+      <Name>pipe_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\pipe_ex_2.vcxproj">
+      <Project>{68897354-5E2D-33FF-86A6-325F520FD6D4}</Project>
+      <Name>pipe_ex_2</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\quantum_computing_ex.vcxproj">
+      <Project>{6BB34EE1-EB38-3333-9A58-2C9B60E4AEBA}</Project>
+      <Name>quantum_computing_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\queue_ex.vcxproj">
+      <Project>{61BEA1CB-E6DB-33EF-9AFB-2F85546E2BED}</Project>
+      <Name>queue_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\random_cropper_ex.vcxproj">
+      <Project>{7DD3C085-3D63-3E41-84CA-53E70D67A976}</Project>
+      <Name>random_cropper_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\rank_features_ex.vcxproj">
+      <Project>{C83B0CCF-8EAA-3D99-A667-2AA9209344E2}</Project>
+      <Name>rank_features_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\running_stats_ex.vcxproj">
+      <Project>{3FA2C64F-2852-3EFF-9791-7CBFA1D5BE80}</Project>
+      <Name>running_stats_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\rvm_ex.vcxproj">
+      <Project>{B22BD34A-76E9-3735-AB9D-906DF59F5D14}</Project>
+      <Name>rvm_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\rvm_regression_ex.vcxproj">
+      <Project>{E7241651-52D3-35A5-8A6F-E61578ACAB44}</Project>
+      <Name>rvm_regression_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\sequence_labeler_ex.vcxproj">
+      <Project>{EC551609-FD97-3D9E-B27B-57135B2030AC}</Project>
+      <Name>sequence_labeler_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\sequence_segmenter_ex.vcxproj">
+      <Project>{7B342C8D-8FC6-394A-B7A2-695F73BC6C8C}</Project>
+      <Name>sequence_segmenter_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\server_http_ex.vcxproj">
+      <Project>{DD9A677E-26FE-3BA1-8AC3-83244E2D3862}</Project>
+      <Name>server_http_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\server_iostream_ex.vcxproj">
+      <Project>{BF0FFFA4-5C34-3774-AB27-F8119A230C2B}</Project>
+      <Name>server_iostream_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\sockets_ex.vcxproj">
+      <Project>{8300382B-5C51-361D-80BD-55F3D921C54E}</Project>
+      <Name>sockets_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\sockstreambuf_ex.vcxproj">
+      <Project>{BE2808A0-E981-3245-B769-63F279794758}</Project>
+      <Name>sockstreambuf_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\std_allocator_ex.vcxproj">
+      <Project>{D86B95B4-7F3C-353F-9773-2FDA1B08C50E}</Project>
+      <Name>std_allocator_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\surf_ex.vcxproj">
+      <Project>{3426BC4E-1CD8-38A4-9246-06C633DF4064}</Project>
+      <Name>surf_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\svm_c_ex.vcxproj">
+      <Project>{A2617053-09F0-39DF-B95E-98948569A291}</Project>
+      <Name>svm_c_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\svm_ex.vcxproj">
+      <Project>{08CED623-2DE1-3980-9ABD-78BEF5FD281D}</Project>
+      <Name>svm_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\svm_pegasos_ex.vcxproj">
+      <Project>{8FA4CC93-FAD4-37A3-A2AA-6974EF060DAE}</Project>
+      <Name>svm_pegasos_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\svm_rank_ex.vcxproj">
+      <Project>{F7F298E7-0DE8-34EB-A3FC-5A702FC85B58}</Project>
+      <Name>svm_rank_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\svm_sparse_ex.vcxproj">
+      <Project>{3B0F59D5-4B8D-34E3-9D66-FDBDE8BF2E5F}</Project>
+      <Name>svm_sparse_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\svm_struct_ex.vcxproj">
+      <Project>{C07E5DBE-34CA-3E96-A6FC-568EE2E7ACEA}</Project>
+      <Name>svm_struct_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\svr_ex.vcxproj">
+      <Project>{21B17BE7-85DB-36F3-ADAC-2EBCC6C87C48}</Project>
+      <Name>svr_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\thread_function_ex.vcxproj">
+      <Project>{7D4E148E-C439-3D80-8AC7-324A983E08B8}</Project>
+      <Name>thread_function_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\thread_pool_ex.vcxproj">
+      <Project>{74D62747-8993-371F-B31B-F82E85BBFBCC}</Project>
+      <Name>thread_pool_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\threaded_object_ex.vcxproj">
+      <Project>{9DDBDAA2-61DF-3DEE-B0B7-F12E26F1538D}</Project>
+      <Name>threaded_object_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\threads_ex.vcxproj">
+      <Project>{4E6EF9FA-BCD6-3160-A2CB-E82CB565EE8D}</Project>
+      <Name>threads_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\timer_ex.vcxproj">
+      <Project>{33FEC613-2047-3C45-9AE6-A896B97E3A9B}</Project>
+      <Name>timer_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\train_object_detector.vcxproj">
+      <Project>{CB47BAED-0282-391E-9460-855D0D8A435B}</Project>
+      <Name>train_object_detector</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\train_shape_predictor_ex.vcxproj">
+      <Project>{261C3932-0D26-312E-973D-98644FBECEFC}</Project>
+      <Name>train_shape_predictor_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\using_custom_kernels_ex.vcxproj">
+      <Project>{EF1AF364-F408-3D80-BE52-C05972B716AE}</Project>
+      <Name>using_custom_kernels_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\video_tracking_ex.vcxproj">
+      <Project>{F564C44C-EC2C-3BD5-8AB7-ECFE9D33CBBE}</Project>
+      <Name>video_tracking_ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\xml_parser_ex.vcxproj">
+      <Project>{9C7EF017-95D9-356D-9E10-0A057C40644A}</Project>
+      <Name>xml_parser_ex</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

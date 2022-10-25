@@ -1,6 +1,6 @@
 #include "SDFRenderer.h"
 #include "Utils/PseudoInverse.h"
-#include "torusfitting.h"
+
 
 #if FALCOR_D3D12_AVAILABLE
 FALCOR_EXPORT_D3D12_AGILITY_SDK
@@ -259,7 +259,7 @@ void SDFRenderer::onLoad(RenderContext* pRenderContext)
 
     setUpGui();
 
-    toruspoints = getTorusPoints(numberofpoints, 0.3f, 1.0f);
+    toruspoints = tfit.getTorusPoints(numberofpoints, 0.3f, 1.0f);
 }
 
 bool SDFRenderer::isOutOfBox(float3 pos)
@@ -330,12 +330,14 @@ void SDFRenderer::onFrameRender(RenderContext* pRenderContext, const Fbo::Shared
     else {
         //tóruszillesztés
         if (newpoints) {
-            toruspoints = getNewPoints(numberofpoints);
+            toruspoints = tfit.getNewPoints(numberofpoints);
             newpoints = false;
         }
 
         Buffer::SharedPtr pBuffer = Buffer::createStructured(fittingState->getProgram().get(), "points", numberofpoints);
         pBuffer->setBlob(toruspoints.data(),0, numberofpoints*sizeof(float3));
+
+        tfit.getPMatrix(toruspoints);
         
         float4x4 m = glm::scale(float4x4(1.0), float3((float)boundingbox));
         fittingVars["vsCb"]["model"] = m;

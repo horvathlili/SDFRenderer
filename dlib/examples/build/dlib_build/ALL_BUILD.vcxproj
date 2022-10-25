@@ -1,0 +1,184 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ResolveNugetPackages>false</ResolveNugetPackages>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{7C594917-93BE-315B-A863-8C1312789A32}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+    <Platform>x64</Platform>
+    <ProjectName>ALL_BUILD</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\dlib\external\libpng;C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\dlib\external\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\dlib\external\libpng;C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\dlib\external\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\dlib\external\libpng;C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\dlib\external\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\dlib\external\libpng;C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\dlib\external\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\dlib\CMakeLists.txt">
+      <UseUtf8Encoding>Always</UseUtf8Encoding>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/tdk/Falcor/Source/Samples/SDFRenderer/dlib/dlib/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/tdk/Falcor/Source/Samples/SDFRenderer/dlib/examples -BC:/tdk/Falcor/Source/Samples/SDFRenderer/dlib/examples/build --check-stamp-file C:/tdk/Falcor/Source/Samples/SDFRenderer/dlib/examples/build/dlib_build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files\CMake\share\cmake-3.24\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CheckFunctionExists.c;C:\Program Files\CMake\share\cmake-3.24\Modules\CheckFunctionExists.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CheckIncludeFile.c.in;C:\Program Files\CMake\share\cmake-3.24\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CheckIncludeFileCXX.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CheckLibraryExists.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CheckTypeSize.c.in;C:\Program Files\CMake\share\cmake-3.24\Modules\CheckTypeSize.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\FindBLAS.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\FindCUDA.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\FindCUDA\select_compute_arch.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\FindGIF.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\FindJPEG.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\FindPNG.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\FindThreads.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\FindZLIB.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\GNUInstallDirs.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\SelectLibraryConfigurations.cmake;C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\dlib\cmake_utils\check_if_neon_available.cmake;C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\dlib\cmake_utils\find_blas.cmake;C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\dlib\cmake_utils\find_libjpeg.cmake;C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\dlib\cmake_utils\find_libpng.cmake;C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\dlib\cmake_utils\find_libwebp.cmake;C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\dlib\cmake_utils\release_build_by_default;C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\dlib\cmake_utils\set_compiler_specific_options.cmake;C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\dlib\cmake_utils\use_cpp_11.cmake;C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\CMakeFiles\CheckTypeSize\SIZE_OF_VOID_PTR.c;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\dlib_build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/tdk/Falcor/Source/Samples/SDFRenderer/dlib/dlib/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/tdk/Falcor/Source/Samples/SDFRenderer/dlib/examples -BC:/tdk/Falcor/Source/Samples/SDFRenderer/dlib/examples/build --check-stamp-file C:/tdk/Falcor/Source/Samples/SDFRenderer/dlib/examples/build/dlib_build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Program Files\CMake\share\cmake-3.24\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CheckFunctionExists.c;C:\Program Files\CMake\share\cmake-3.24\Modules\CheckFunctionExists.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CheckIncludeFile.c.in;C:\Program Files\CMake\share\cmake-3.24\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CheckIncludeFileCXX.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CheckLibraryExists.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CheckTypeSize.c.in;C:\Program Files\CMake\share\cmake-3.24\Modules\CheckTypeSize.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\FindBLAS.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\FindCUDA.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\FindCUDA\select_compute_arch.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\FindGIF.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\FindJPEG.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\FindPNG.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\FindThreads.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\FindZLIB.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\GNUInstallDirs.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\SelectLibraryConfigurations.cmake;C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\dlib\cmake_utils\check_if_neon_available.cmake;C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\dlib\cmake_utils\find_blas.cmake;C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\dlib\cmake_utils\find_libjpeg.cmake;C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\dlib\cmake_utils\find_libpng.cmake;C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\dlib\cmake_utils\find_libwebp.cmake;C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\dlib\cmake_utils\release_build_by_default;C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\dlib\cmake_utils\set_compiler_specific_options.cmake;C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\dlib\cmake_utils\use_cpp_11.cmake;C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\CMakeFiles\CheckTypeSize\SIZE_OF_VOID_PTR.c;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\dlib_build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule C:/tdk/Falcor/Source/Samples/SDFRenderer/dlib/dlib/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/tdk/Falcor/Source/Samples/SDFRenderer/dlib/examples -BC:/tdk/Falcor/Source/Samples/SDFRenderer/dlib/examples/build --check-stamp-file C:/tdk/Falcor/Source/Samples/SDFRenderer/dlib/examples/build/dlib_build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Program Files\CMake\share\cmake-3.24\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CheckFunctionExists.c;C:\Program Files\CMake\share\cmake-3.24\Modules\CheckFunctionExists.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CheckIncludeFile.c.in;C:\Program Files\CMake\share\cmake-3.24\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CheckIncludeFileCXX.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CheckLibraryExists.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CheckTypeSize.c.in;C:\Program Files\CMake\share\cmake-3.24\Modules\CheckTypeSize.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\FindBLAS.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\FindCUDA.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\FindCUDA\select_compute_arch.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\FindGIF.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\FindJPEG.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\FindPNG.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\FindThreads.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\FindZLIB.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\GNUInstallDirs.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\SelectLibraryConfigurations.cmake;C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\dlib\cmake_utils\check_if_neon_available.cmake;C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\dlib\cmake_utils\find_blas.cmake;C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\dlib\cmake_utils\find_libjpeg.cmake;C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\dlib\cmake_utils\find_libpng.cmake;C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\dlib\cmake_utils\find_libwebp.cmake;C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\dlib\cmake_utils\release_build_by_default;C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\dlib\cmake_utils\set_compiler_specific_options.cmake;C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\dlib\cmake_utils\use_cpp_11.cmake;C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\CMakeFiles\CheckTypeSize\SIZE_OF_VOID_PTR.c;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\dlib_build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule C:/tdk/Falcor/Source/Samples/SDFRenderer/dlib/dlib/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/tdk/Falcor/Source/Samples/SDFRenderer/dlib/examples -BC:/tdk/Falcor/Source/Samples/SDFRenderer/dlib/examples/build --check-stamp-file C:/tdk/Falcor/Source/Samples/SDFRenderer/dlib/examples/build/dlib_build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Program Files\CMake\share\cmake-3.24\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CheckFunctionExists.c;C:\Program Files\CMake\share\cmake-3.24\Modules\CheckFunctionExists.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CheckIncludeFile.c.in;C:\Program Files\CMake\share\cmake-3.24\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CheckIncludeFileCXX.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CheckLibraryExists.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CheckTypeSize.c.in;C:\Program Files\CMake\share\cmake-3.24\Modules\CheckTypeSize.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\FindBLAS.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\FindCUDA.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\FindCUDA\select_compute_arch.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\FindGIF.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\FindJPEG.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\FindPNG.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\FindThreads.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\FindZLIB.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\GNUInstallDirs.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\SelectLibraryConfigurations.cmake;C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\dlib\cmake_utils\check_if_neon_available.cmake;C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\dlib\cmake_utils\find_blas.cmake;C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\dlib\cmake_utils\find_libjpeg.cmake;C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\dlib\cmake_utils\find_libpng.cmake;C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\dlib\cmake_utils\find_libwebp.cmake;C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\dlib\cmake_utils\release_build_by_default;C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\dlib\cmake_utils\set_compiler_specific_options.cmake;C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\dlib\cmake_utils\use_cpp_11.cmake;C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\CMakeFiles\CheckTypeSize\SIZE_OF_VOID_PTR.c;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\dlib_build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\ZERO_CHECK.vcxproj">
+      <Project>{4AC11D38-24C9-3FA3-B722-0143EC21F15E}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\dlib_build\dlib.vcxproj">
+      <Project>{91B32A59-F629-374E-8684-BF648E3FA59A}</Project>
+      <Name>dlib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

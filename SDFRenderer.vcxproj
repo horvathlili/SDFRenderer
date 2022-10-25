@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ComputeProgramWrapper.cpp" />
+    <ClCompile Include="dlib\dlib\all\source.cpp" />
     <ClCompile Include="SDFRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -71,7 +72,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\source;$(IncludePath)</IncludePath>
+    <IncludePath>C:\tdk\Falcor\Source\Samples\SDFRenderer;C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib;$(IncludePath)</IncludePath>
     <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -86,6 +87,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

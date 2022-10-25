@@ -3,6 +3,7 @@
 #include "ComputeProgramWrapper.h"
 #include "Eigen/Dense"
 #include <vector>
+#include "torusfitting.h"
 
 using namespace Falcor;
 
@@ -82,6 +83,7 @@ private:
     std::vector<float3> toruspoints;
     int numberofpoints = 30;
     bool newpoints = false;
+    TorusFitting tfit;
 
     DebugConsole console;
 
