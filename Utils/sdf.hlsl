@@ -35,6 +35,26 @@ float map(float3 p, int sdf)
     return 0;
 }
 
+float sdTorus2(float3 p, float r, float R, float3 c, float3 d)
+{
+    float3 p2 = p - c;
+    float3 e2 = normalize(d);
+    float3 n = cross(e2, normalize(p2));
+
+    float3 e1 = normalize(cross(e2, n));
+
+    float px = dot(e1, p2);
+    float py = dot(e2, p2);
+
+    float dist1 = sqrt((px - R) * (px - R) + py * py) - r;
+    float dist2 = sqrt((px + R) * (px + R) + py * py) - r;
+
+    if (abs(dist1) <= abs(dist2))
+        return dist1;
+    else
+        return dist2;
+}
+
 float3 getNormal(float3 p, int sdf)
 {
     float e = 0.0001;

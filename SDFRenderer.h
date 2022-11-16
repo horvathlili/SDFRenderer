@@ -22,6 +22,8 @@ public:
 
 private:
 
+    DepthStencilState::SharedPtr mpDepthTestDS = nullptr;
+
     GraphicsProgram::SharedPtr mProgram;
     GraphicsVars::SharedPtr mpVars;
     GraphicsState::SharedPtr mpState;
@@ -76,11 +78,13 @@ private:
     Gui::RadioButtonGroup function;
     uint32_t func = 0;
 
+
+    //tóruszillesztés
     void initFittingProgram();
     GraphicsProgram::SharedPtr fittingProgram;
     GraphicsVars::SharedPtr fittingVars;
     GraphicsState::SharedPtr fittingState;
-    std::vector<float3> toruspoints;
+    std::vector<float4> toruspoints;
     int numberofpoints = 30;
     bool newpoints = false;
     TorusFitting tfit;

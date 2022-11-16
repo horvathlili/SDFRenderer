@@ -85,7 +85,7 @@ void SDFRenderer::onGuiRender(Gui* pGui)
             retexture = true;
     }
     else {
-        if (w.slider("number of points", numberofpoints, 30, 300))
+        if (w.slider("number of points", numberofpoints, 5, 30))
             newpoints = true;
     }
 }
@@ -239,6 +239,10 @@ void SDFRenderer::onLoad(RenderContext* pRenderContext)
 
     initFittingProgram();
 
+    DepthStencilState::Desc dsDesc;
+    dsDesc.setDepthFunc(ComparisonFunc::Less).setDepthEnabled(true);
+    mpDepthTestDS = DepthStencilState::create(dsDesc);
+
     mComputeProgram = ComputeProgramWrapper::create();
     mComputeProgram->createProgram("Samples/SDFRenderer/Shaders/SDFTexture.cs.slang");
     mComputeProgramFirstOrder = ComputeProgramWrapper::create();
@@ -259,7 +263,8 @@ void SDFRenderer::onLoad(RenderContext* pRenderContext)
 
     setUpGui();
 
-    toruspoints = tfit.getTorusPoints(numberofpoints, 0.3f, 1.0f);
+    toruspoints = tfit.getNewPoints(numberofpoints);
+    tfit.fitTorus();
 }
 
 bool SDFRenderer::isOutOfBox(float3 pos)
@@ -276,7 +281,9 @@ bool SDFRenderer::isOutOfBox(float3 pos)
 void SDFRenderer::onFrameRender(RenderContext* pRenderContext, const Fbo::SharedPtr& pTargetFbo)
 {
     mpState->setFbo(pTargetFbo);
+    mpState->setDepthStencilState(mpDepthTestDS);
     fittingState->setFbo(pTargetFbo);
+    fittingState->setDepthStencilState(mpDepthTestDS);
     float4 clearColor = float4(0, 0, 0, 1);
     pRenderContext->clearFbo(mpState->getFbo().get(), clearColor, 1.0f, 0);
     pRenderContext->clearFbo(fittingState->getFbo().get(), clearColor, 1.0f, 0);
@@ -284,75 +291,81 @@ void SDFRenderer::onFrameRender(RenderContext* pRenderContext, const Fbo::Shared
     ccontrol->update();
 
     if (func == 0) {
-        if (retexture) {
-            sdfTextures = generateTexture(pRenderContext);
-            retexture = false;
-        }
+    if (retexture) {
+        sdfTextures = generateTexture(pRenderContext);
+        retexture = false;
+    }
 
-        float4x4 m = glm::scale(float4x4(1.0), float3((float)boundingbox));
+    float4x4 m = glm::scale(float4x4(1.0), float3((float)boundingbox));
 
-        //sdf-ek
-        mpVars["texture1"] = sdfTextures[0];
+    //sdf-ek
+    mpVars["texture1"] = sdfTextures[0];
 
-        if (textureOrder == 2) {
-            mpVars["texture2"] = sdfTextures[1];
-            mpVars["texture3"] = sdfTextures[2];
-        }
+    if (textureOrder == 2) {
+        mpVars["texture2"] = sdfTextures[1];
+        mpVars["texture3"] = sdfTextures[2];
+    }
 
-        //kívül vagyunk-e a boundingboxon
-        isbox = isOutOfBox(camera->getPosition());
+    //kívül vagyunk-e a boundingboxon
+    isbox = isOutOfBox(camera->getPosition());
 
-        mpVars["psCb"]["eye"] = camera->getPosition();
-        mpVars["psCb"]["center"] = camera->getTarget();
-        mpVars["psCb"]["up"] = camera->getUpVector();
-        mpVars["psCb"]["ar"] = camera->getAspectRatio();
-        mpVars["psCb"]["sdf"] = sdf;
-        mpVars["psCb"]["texorder"] = textureOrder;
-        mpVars["psCb"]["box"] = isbox;
-        mpVars["psCb"]["res"] = res;
-        mpVars["psCb"]["boundingBox"] = (float)boundingbox;
-        mpVars["psCb"]["viewproj"] = camera->getViewProjMatrix();
+    mpVars["psCb"]["eye"] = camera->getPosition();
+    mpVars["psCb"]["center"] = camera->getTarget();
+    mpVars["psCb"]["up"] = camera->getUpVector();
+    mpVars["psCb"]["ar"] = camera->getAspectRatio();
+    mpVars["psCb"]["sdf"] = sdf;
+    mpVars["psCb"]["texorder"] = textureOrder;
+    mpVars["psCb"]["box"] = isbox;
+    mpVars["psCb"]["res"] = res;
+    mpVars["psCb"]["boundingBox"] = (float)boundingbox;
+    mpVars["psCb"]["viewproj"] = camera->getViewProjMatrix();
 
 
-        mpVars["vsCb"]["model"] = m;
-        mpVars["vsCb"]["viewproj"] = camera->getViewProjMatrix();
-        mpVars["vsCb"]["box"] = isbox;
+    mpVars["vsCb"]["model"] = m;
+    mpVars["vsCb"]["viewproj"] = camera->getViewProjMatrix();
+    mpVars["vsCb"]["box"] = isbox;
 
-        if (isbox) {
-            mpState->setVao(cubeVao);
-            pRenderContext->draw(mpState.get(), mpVars.get(), 36, 0);
-        }
-        else {
-            mpState->setVao(pVao);
-            pRenderContext->draw(mpState.get(), mpVars.get(), 4, 0);
-        }
+    if (isbox) {
+        mpState->setVao(cubeVao);
+        pRenderContext->draw(mpState.get(), mpVars.get(), 36, 0);
     }
     else {
+        mpState->setVao(pVao);
+        pRenderContext->draw(mpState.get(), mpVars.get(), 4, 0);
+    }
+    }
+   else {
         //tóruszillesztés
-        if (newpoints) {
-            toruspoints = tfit.getNewPoints(numberofpoints);
-            newpoints = false;
-        }
+    if (newpoints) {
+        toruspoints = tfit.getNewPoints(numberofpoints);
+        tfit.fitTorus();
+        newpoints = false;
+    }
 
-        Buffer::SharedPtr pBuffer = Buffer::createStructured(fittingState->getProgram().get(), "points", numberofpoints);
-        pBuffer->setBlob(toruspoints.data(),0, numberofpoints*sizeof(float3));
+    Buffer::SharedPtr pBuffer = Buffer::createStructured(fittingState->getProgram().get(), "points", numberofpoints);
+    pBuffer->setBlob(toruspoints.data(), 0, numberofpoints * sizeof(float4));
 
-        tfit.getPMatrix(toruspoints);
-        
-        float4x4 m = glm::scale(float4x4(1.0), float3((float)boundingbox));
-        fittingVars["vsCb"]["model"] = m;
-        fittingVars["vsCb"]["viewproj"] = camera->getViewProjMatrix();
-        fittingVars["vsCb"]["box"] = isbox;
-        fittingVars["psCb"]["eye"] = camera->getPosition();
-        fittingVars["psCb"]["center"] = camera->getTarget();
-        fittingVars["psCb"]["up"] = camera->getUpVector();
-        fittingVars["psCb"]["ar"] = camera->getAspectRatio();
-        fittingVars["psCb"]["n"] = numberofpoints;
 
-        fittingVars->setBuffer("points", pBuffer);
-        
-        fittingState->setVao(pVao);
-        pRenderContext->draw(fittingState.get(), fittingVars.get(), 4, 0);
+
+    float4x4 m = glm::scale(float4x4(1.0), float3((float)boundingbox));
+    fittingVars["vsCb"]["model"] = m;
+    fittingVars["vsCb"]["viewproj"] = camera->getViewProjMatrix();
+    fittingVars["vsCb"]["box"] = isbox;
+    fittingVars["psCb"]["eye"] = camera->getPosition();
+    fittingVars["psCb"]["center"] = camera->getTarget();
+    fittingVars["psCb"]["up"] = camera->getUpVector();
+    fittingVars["psCb"]["ar"] = camera->getAspectRatio();
+    fittingVars["psCb"]["n"] = numberofpoints;
+    fittingVars["psCb"]["r"] = float(tfit.minimised_params(0));
+    fittingVars["psCb"]["R"] = float(tfit.minimised_params(1));
+    fittingVars["psCb"]["c"] = float3(tfit.minimised_params(2), tfit.minimised_params(3), tfit.minimised_params(4));
+    fittingVars["psCb"]["d"] = float3(tfit.minimised_params(5), tfit.minimised_params(6), tfit.minimised_params(7));
+    fittingVars["psCb"]["viewproj"] = camera->getViewProjMatrix();
+
+    fittingVars->setBuffer("points", pBuffer);
+
+    fittingState->setVao(pVao);
+    pRenderContext->draw(fittingState.get(), fittingVars.get(), 4, 0);
     }
 }
 

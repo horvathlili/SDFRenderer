@@ -14,7 +14,7 @@ struct PsOut
     float depth : SV_Depth;
 };
 
-RWStructuredBuffer<float3> points;
+RWStructuredBuffer<float4> points;
 
 cbuffer psCb
 {
@@ -23,6 +23,11 @@ cbuffer psCb
     float4 up;
     float ar;
     int n;
+    float r;
+    float R;
+    float3 c;
+    float3 d;
+    float4 viewproj;
 };
 
 
@@ -31,22 +36,28 @@ PsOut main(psIn input) : SV_TARGET
 {
     PsOut o;
     o.col = float4(0, 0, 0, 1);
-    Ray r = getRay(eye.xyz, center.xyz, up.xyz, ar, input.pixelpos.x, input.pixelpos.y);
+    Ray ray = getRay(eye.xyz, center.xyz, up.xyz, ar, input.pixelpos.x, input.pixelpos.y);
 
-     
-    for (int i = 0; i < n; i++)
+    float t = 0.0f;
+    int i;
+    int n = 100;
+    float3 pos = ray.p + t * ray.v;
+    
+    for (i = 0; i < n; i++)
     {
-        float3 d = normalize(points[i] - r.p);
-        if (clamp(dot(d, r.v), 0, 1) > 0.9999)
-        {
-            o.col = float4(1, 0, 0, 1);
-        }
+        pos = ray.p + t * ray.v;
+        float h = sdTorus2(pos, r, R, c, float3(d.x, d.z, d.y));
+        if (h < 0.0001)
+            break;
+        t += h;
     }
     
-    
-       
+
+    if (i < n)
+        o.col = float4(1, 1, 1, 1);
     // calc fragment depth
-    //float4 depth_vec = mul(float4(t * r.v + r.p, 1), viewproj);
+    float4 depth_vec = mul(float4(t * ray.v + ray.p, 1), viewproj);
+    o.depth = depth_vec.z / depth_vec.w;
     o.depth = 1;
 
     return o;

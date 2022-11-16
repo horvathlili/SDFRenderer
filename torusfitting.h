@@ -10,87 +10,94 @@ using namespace Falcor;
 class TorusFitting {
 
 public: 
-    std::vector<float3> torus_points;
-
-    std::vector<float3> getTorusPoints(int n, float r, float R) {
-        std::vector<float3> points;
+    std::vector<float4> torus_points;
+    dlib::matrix<double, 8, 1> minimised_params;
+  
+    std::vector<float4> getTorusPoints(int n, float r, float R,float3 c, float3 d) {
+        std::vector<float4> points;
         for (int i = 0; i < n; i++) {
-            float u = (float)((float)rand() / (float)(RAND_MAX) * 2.0f * M_PI);
-            float v = (float)((float)rand() / (float)(RAND_MAX) * 2.0f * M_PI);
 
-            points.push_back(float3(
-                (R + r * cos(u)) * cos(v),
-                r * sin(u),
-                (R + r * cos(u)) * sin(v)
-            ));
+            float4 p;
+            p.x = float(rand())/float(RAND_MAX) * 5 - 2.5;
+            p.y = float(rand()) / float(RAND_MAX) * 5 - 2.5;
+            p.z = float(rand()) / float(RAND_MAX) * 5 - 2.5;
+            p.w = getDistFromTorus(p.xyz, r, R, c, d);
+            //p.w = sqrt(dot(p.xyz - c, p.xyz - c)) - 0.5;
+            points.push_back(p);
+
         };
 
         torus_points = points;
-
         return points;
     }
 
-    std::vector<float3> getNewPoints(int n) {
-        return getTorusPoints(n, 0.3f, 1.0f);
+    std::vector<float4> getNewPoints(int n) {
+        return getTorusPoints(n, 0.1, 0.5,float3(0,0,0),float3(0,0,1));
     }
 
-    dlib::matrix<float, 14, 14> getPMatrix(std::vector<float3> points) {
-        dlib::matrix<float, 14, 1> P;
+    float getDistFromTorus(float3 p, float r, float R, float3 c, float3 d) {
+        float3 p2 = p - c;
+        float3 e2 = normalize(d);
+        float3 n = cross(e2, p2);
 
-        const size_t s = points.size();
+        float3 e1 = normalize(cross(e2, n));
 
-        dlib::matrix<float, 14, 14> Psum;
-        for (int i = 0; i < s; i++) {
-            float3 p = points[i];
-            P(0) = (p.x * p.x + p.y * p.y + p.z * p.z) * (p.x * p.x + p.y * p.y + p.z * p.z);
-            P(1) = 4 * p.x * (p.x * p.x + p.y * p.y + p.z * p.z);
-            P(2) = 4 * p.y * (p.x * p.x + p.y * p.y + p.z * p.z);
-            P(3) = 4 * p.z * (p.x * p.x + p.y * p.y + p.z * p.z);
-            P(4) = p.x * p.x;
-            P(5) = p.y * p.y;
-            P(6) = p.z * p.z;
-            P(7) = 2 * p.x * p.y;
-            P(8) = 2 * p.x * p.z;
-            P(9) = 2 * p.y * p.z;
-            P(10) = 2 * p.x;
-            P(11) = 2 * p.y;
-            P(12) = 2 * p.z;
-            P(13) = 1;
+        float px = dot(e1, p2);
+        float py = dot(e2, p2);
 
-            Psum += P * trans(P);
-        }
-        return Psum;
-    }
+        float dist1 = sqrt((px - R) * (px - R) + py * py) - r;
+        float dist2 = sqrt((px + R) * (px + R) + py * py) - r;
 
-    double fToMinimise(dlib::matrix<float, 9, 1> t) {
-        dlib::matrix<float, 14, 0> s;
-        s(0) = t(3);
-        s(1) = -t(3) * t(4);
-        s(2) = -t(3) * t(5);
-        s(3) = -t(3) * t(6);
-        s(4) = 4 * t(3) * t(4) * t(4) + t(0) * t(0) + t(7);
-        s(5) = 4 * t(3) * t(5) * t(5) + t(1) * t(1) + t(7);
-        s(6) = 4 * t(3) * t(6) * t(6) + t(2) * t(2) + t(7);
-        s(7) = 4 * t(3) * t(4) * t(5) + t(0) * t(1);
-        s(8) = 4 * t(3) * t(4) * t(6) + t(0) * t(2);
-        s(9) = 4 * t(3) * t(5) * t(6) + t(1) * t(2);
-        s(10) = -t(4) * t(7);
-        s(11) = -t(5) * t(7);
-        s(12) = -t(6) * t(7);
-        s(13) = t(8);
-
-        dlib::matrix<float, 14, 14> Psum = getPMatrix(torus_points);
-
-        return trans(s) * Psum * s;
+        if (abs(dist1) <= abs(dist2))
+            return dist1;
+        else return dist2;
     }
 
     void fitTorus() {
 
-        dlib::matrix<float, 9, 1> start(0);
+        dlib::matrix<double, 8, 1> start = { 1,1,0.5,0.5,0.5 ,0,0,1};
 
-        /*dlib::find_min_using_approximate_derivatives(dlib::bfgs_search_strategy(),
-            dlib::objective_delta_stop_strategy(1e-7),
-            &TorusFitting::fToMinimise, start, -1);*/
+
+        auto fToMinimise = [&](const dlib::matrix<double, 8, 1>& t) {
+            
+            float R = t(1);
+            float r = t(0);
+            float3 c = float3(t(2), t(3), t(4));
+            float3 d = float3(0,0,1);
+            
+
+            double distsum = 0;
+
+            for (int i = 0; i < torus_points.size(); i++) {
+
+                float dist = getDistFromTorus(torus_points[i].xyz, r, R, c, d) - torus_points[i].w;
+
+                distsum += (dist * dist);
+            }
+            return distsum;
+        };
+
+
+        double min = dlib::find_min_using_approximate_derivatives(dlib::bfgs_search_strategy(),
+            dlib::objective_delta_stop_strategy(0.0000000000000001),
+            fToMinimise, start, 0.001);
+        minimised_params = start;
+
+        for (int j = 0; j < 10; j++) {
+            start = { rand() / (float)RAND_MAX,rand() / (float)RAND_MAX,
+                rand() / (float)RAND_MAX,rand() / (float)RAND_MAX,rand() / (float)RAND_MAX ,
+                rand() / (float)RAND_MAX,rand() / (float)RAND_MAX,rand() / (float)RAND_MAX };
+            double min2 = dlib::find_min_using_approximate_derivatives(dlib::bfgs_search_strategy(),
+                dlib::objective_delta_stop_strategy(0.0000000000000001),
+                fToMinimise, start, 0.0000001);
+            if (min2 < min) {
+                min = min2;
+                minimised_params = start;
+               
+            }
+            
+        }
+     
     }
 
 };
