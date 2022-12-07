@@ -12,6 +12,7 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="torusfitting.h" />
+    <ClInclude Include="clustering.h" />
   </ItemGroup>
   <ItemGroup>
     <ShaderSource Include="Shaders\SDFRenderer.ps.slang">

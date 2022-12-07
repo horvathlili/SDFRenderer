@@ -1,5 +1,11 @@
+#ifndef TEXORDER
+#define TEXORDER 0
+#endif
+
 #include "../Utils/Ray.hlsl"
 #include "../Utils/sdf.hlsl"
+
+
 
 struct psIn
 {
@@ -43,40 +49,39 @@ bool isOutOfBox(float3 pos)
 
 }
 
-float get_texture(float3 uvw, float3 pos, int order)
+float get_texture(float3 uvw, float3 pos)
 {
-    if (order == 0)
-   {
+#if TEXORDER == 0
         return texture1.Sample(mSampler, uvw).r;
-    }
-    if (order == 1)
-    {     
+#endif
+#if TEXORDER == 1  
         float4 s = texture1.Sample(mSampler, uvw);
         return s.r*pos.x+s.g*pos.y+s.b*pos.z+s.a;
-    }
-    if (order == 2)
-    {
+#endif
+#if TEXORDER == 2
         float4 s1 = texture1.Sample(mSampler, uvw);
         float4 s2 = texture2.Sample(mSampler, uvw);
         float4 s3 = texture3.Sample(mSampler, uvw);
         return s1.r * pos.x + s1.g * pos.y + s1.b * pos.z
              + s1.a * pos.x*pos.x + s2.r * pos.y*pos.y + s2.g * pos.z*pos.z
              + s2.b * pos.x*pos.y + s2.a*pos.x*pos.z + s3.r*pos.y*pos.z + s3.g;
-    }
-    return 0;
+#endif
 }
 
 
-float3 get_normal(float3 uvw, int order)
+float3 get_normal(float3 uvw)
 {
-    if (order == 0)
+    #if TEXORDER == 0
         return texture1.Sample(mSampler, uvw).gba;
-    if (order == 1)
+    #endif
+    #if TEXORDER == 1
         return texture1.Sample(mSampler, uvw).rgb;
-    if (order == 2)
+    #endif
+    #if TEXORDER == 2
         return texture1.Sample(mSampler, uvw).rgb;
-    return 0;
+    #endif
 }
+
 
 PsOut main(psIn input) : SV_TARGET
 {
@@ -101,7 +106,7 @@ PsOut main(psIn input) : SV_TARGET
         for (i = 0; i < n; i++)
         {
             pos = r.p + t * r.v;
-        float h = get_texture(pos / float3(boundingBox + boundingBox/(float) res) + float3(0.5), pos, texorder);
+        float h = get_texture(pos / float3(boundingBox + boundingBox/(float) res) + float3(0.5), pos);
         if (h < 0.0001 || isOutOfBox(pos))
                 break;
             t += h;
@@ -122,7 +127,7 @@ PsOut main(psIn input) : SV_TARGET
             float3 light_dir = float3(-1, -1, -1);
         
             float3 ambient = La * Ka;
-            float3 diffuse = clamp(dot(normalize(-light_dir), get_normal(pos / boundingBox + 0.5, texorder)), 0, 1) * Ld * Kd;
+            float3 diffuse = clamp(dot(normalize(-light_dir), get_normal(pos / boundingBox + 0.5)), 0, 1) * Ld * Kd;
 
            o.col =  float4(ambient + diffuse, 1);
         }
@@ -132,3 +137,4 @@ PsOut main(psIn input) : SV_TARGET
     o.depth = depth_vec.z / depth_vec.w;
      return o;
 }
+

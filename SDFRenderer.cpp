@@ -52,8 +52,25 @@ void SDFRenderer::setUpGui() {
     Gui::RadioButton tf;
     tf.label = "torus fitting";
     tf.buttonID = 1;
+    Gui::RadioButton cf;
+    cf.label = "torus fitting with clastering";
+    cf.buttonID = 2;
     function.push_back(dfs);
     function.push_back(tf);
+    function.push_back(cf);
+
+    Gui::RadioButton s1;
+    s1.label = "1";
+    s1.buttonID = 1;
+    Gui::RadioButton s2;
+    s2.label = "2";
+    s2.buttonID = 2;
+    Gui::RadioButton s3;
+    s3.label = "3";
+    s3.buttonID = 3;
+    spheres.push_back(s1);
+    spheres.push_back(s2);
+    spheres.push_back(s3);
 }
 
 void SDFRenderer::onGuiRender(Gui* pGui)
@@ -61,7 +78,9 @@ void SDFRenderer::onGuiRender(Gui* pGui)
 
     Gui::Window w(pGui, "debug", { 350, 200 }, { 10, 90 });
     
-    w.radioButtons(function, func);
+    if (w.radioButtons(function, func)) {
+        newpoints = true;
+    }
     w.separator();
 
     if (func == 0) {
@@ -75,7 +94,7 @@ void SDFRenderer::onGuiRender(Gui* pGui)
 
         if (w.radioButtons(texsize, texturesize))
             retexture = true;
-
+        
         w.separator();
 
         if (w.radioButtons(texorder, textureOrder))
@@ -84,10 +103,19 @@ void SDFRenderer::onGuiRender(Gui* pGui)
         if (w.slider("boundingBox", boundingbox, 2, 20))
             retexture = true;
     }
-    else {
-        if (w.slider("number of points", numberofpoints, 5, 30))
+    if (func == 1) {
+        if (w.slider("number of points", numberofpoints, 2, 10))
             newpoints = true;
     }
+    if (func == 2) {
+        w.text("Right cluster: "+std::to_string(clust.right_cluster));
+        w.text("Wrong cluster: "+std::to_string(clust.wrong_cluster));
+        if (w.radioButtons(spheres, sphere)) {
+            newpoints = true;
+        }
+
+    }
+
 }
 
 
@@ -263,8 +291,10 @@ void SDFRenderer::onLoad(RenderContext* pRenderContext)
 
     setUpGui();
 
-    toruspoints = tfit.getNewPoints(numberofpoints);
+    tfit.getPoints(float3(pointx, pointy, pointz), boxsize, numberofpoints, 0.1, 0.5, float3(0, 0, 0), float3(0, 0, 1));
     tfit.fitTorus();
+
+    clust.getPoints(1,float3(0),2,5);
 }
 
 bool SDFRenderer::isOutOfBox(float3 pos)
@@ -294,6 +324,8 @@ void SDFRenderer::onFrameRender(RenderContext* pRenderContext, const Fbo::Shared
     if (retexture) {
         sdfTextures = generateTexture(pRenderContext);
         retexture = false;
+        mProgram->addDefine("TEXORDER", std::to_string(textureOrder));
+        mProgram->addDefine("SDF", std::to_string(sdf));
     }
 
     float4x4 m = glm::scale(float4x4(1.0), float3((float)boundingbox));
@@ -334,18 +366,17 @@ void SDFRenderer::onFrameRender(RenderContext* pRenderContext, const Fbo::Shared
         pRenderContext->draw(mpState.get(), mpVars.get(), 4, 0);
     }
     }
-   else {
+   if (func == 1){
         //tóruszillesztés
     if (newpoints) {
-        toruspoints = tfit.getNewPoints(numberofpoints);
+        tfit.getPoints(float3(pointx,pointy,pointz),boxsize,numberofpoints,0.1,0.5,float3(0,0,0),float3(0,0,1));
         tfit.fitTorus();
+        fittingProgram->addDefine("MODE", std::to_string(0));
         newpoints = false;
     }
 
-    Buffer::SharedPtr pBuffer = Buffer::createStructured(fittingState->getProgram().get(), "points", numberofpoints);
-    pBuffer->setBlob(toruspoints.data(), 0, numberofpoints * sizeof(float4));
-
-
+    /*Buffer::SharedPtr pBuffer = Buffer::createStructured(fittingState->getProgram().get(), "points", numberofpoints * numberofpoints * numberofpoints);
+    pBuffer->setBlob(toruspoints.data(), 0, numberofpoints*numberofpoints*numberofpoints * sizeof(float4));*/
 
     float4x4 m = glm::scale(float4x4(1.0), float3((float)boundingbox));
     fittingVars["vsCb"]["model"] = m;
@@ -355,18 +386,53 @@ void SDFRenderer::onFrameRender(RenderContext* pRenderContext, const Fbo::Shared
     fittingVars["psCb"]["center"] = camera->getTarget();
     fittingVars["psCb"]["up"] = camera->getUpVector();
     fittingVars["psCb"]["ar"] = camera->getAspectRatio();
-    fittingVars["psCb"]["n"] = numberofpoints;
     fittingVars["psCb"]["r"] = float(tfit.minimised_params(0));
     fittingVars["psCb"]["R"] = float(tfit.minimised_params(1));
     fittingVars["psCb"]["c"] = float3(tfit.minimised_params(2), tfit.minimised_params(3), tfit.minimised_params(4));
     fittingVars["psCb"]["d"] = float3(tfit.minimised_params(5), tfit.minimised_params(6), tfit.minimised_params(7));
     fittingVars["psCb"]["viewproj"] = camera->getViewProjMatrix();
 
-    fittingVars->setBuffer("points", pBuffer);
+    //fittingVars->setBuffer("points", pBuffer);
 
     fittingState->setVao(pVao);
     pRenderContext->draw(fittingState.get(), fittingVars.get(), 4, 0);
     }
+
+   if (func == 2) {
+       if (newpoints) {
+             clust.getPoints(sphere,float3(-0.5,0,0),2,5);
+             clust.clusterPoints();
+             tfit.torus_points = clust.c1;
+             tfit1.torus_points = clust.c2;
+             tfit.fitTorus();
+             tfit1.fitTorus();
+             fittingProgram->addDefine("MODE", std::to_string(1));
+             newpoints = false;
+        }
+
+       float4x4 m = glm::scale(float4x4(1.0), float3((float)boundingbox));
+       fittingVars["vsCb"]["model"] = m;
+       fittingVars["vsCb"]["viewproj"] = camera->getViewProjMatrix();
+       fittingVars["vsCb"]["box"] = isbox;
+       fittingVars["psCb"]["eye"] = camera->getPosition();
+       fittingVars["psCb"]["center"] = camera->getTarget();
+       fittingVars["psCb"]["up"] = camera->getUpVector();
+       fittingVars["psCb"]["ar"] = camera->getAspectRatio();
+       fittingVars["psCb"]["r"] = float(tfit.minimised_params(0));
+       fittingVars["psCb"]["R"] = float(tfit.minimised_params(1));
+       fittingVars["psCb"]["c"] = float3(tfit.minimised_params(2), tfit.minimised_params(3), tfit.minimised_params(4));
+       fittingVars["psCb"]["d"] = float3(tfit.minimised_params(5), tfit.minimised_params(6), tfit.minimised_params(7));
+       fittingVars["psCb"]["r1"] = float(tfit1.minimised_params(0));
+       fittingVars["psCb"]["R1"] = float(tfit1.minimised_params(1));
+       fittingVars["psCb"]["c1"] = float3(tfit1.minimised_params(2), tfit1.minimised_params(3), tfit1.minimised_params(4));
+       fittingVars["psCb"]["d1"] = float3(tfit1.minimised_params(5), tfit1.minimised_params(6), tfit1.minimised_params(7));
+       fittingVars["psCb"]["viewproj"] = camera->getViewProjMatrix();
+
+       //fittingVars->setBuffer("points", pBuffer);
+
+       fittingState->setVao(pVao);
+       pRenderContext->draw(fittingState.get(), fittingVars.get(), 4, 0);
+   }
 }
 
 void SDFRenderer::onShutdown()
@@ -413,7 +479,9 @@ std::vector<Texture::SharedPtr> SDFRenderer::generateTexture(RenderContext* pRen
     }
     
     auto& comp = textureOrder == 0 ? *mComputeProgram : (textureOrder == 1 ? *mComputeProgramFirstOrder : *mComputeProgramA2);
-   
+
+    comp.getProgram()->addDefine("SDF", std::to_string(sdf));
+
     comp["tex3D_uav1"].setUav(pTex1->getUAV(0));
     comp["csCb"]["sdf"] = sdf;
     comp["csCb"]["res"] = res;

@@ -1,3 +1,6 @@
+#ifndef SDF
+#define SDF 1
+#endif
 #include "teapot.slang"
 
 float sdSphere(float3 p, float s)
@@ -23,16 +26,18 @@ float sdBoxFrame(float3 p, float3 b, float e)
 
 float map(float3 p, int sdf)
 {
-    if (sdf == 1)
-       return sdSphere(p, 0.3); 
-    if (sdf == 2)
+    #if SDF == 1
+       return sdSphere(p, 0.3);
+    #endif
+    #if SDF == 2
         return sdTorus(p, float2(0.3, 0.1));
-    if (sdf == 3)
+    #endif
+    #if SDF == 3
         return sdBoxFrame(p, float3(0.2, 0.2, 0.2), 0.05);
-    if (sdf == 4)
+    #endif
+    #if SDF == 4
         return funDist(p);
-
-    return 0;
+    #endif
 }
 
 float sdTorus2(float3 p, float r, float R, float3 c, float3 d)

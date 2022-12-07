@@ -3,7 +3,8 @@
 #include "ComputeProgramWrapper.h"
 #include "Eigen/Dense"
 #include <vector>
-#include "torusfitting.h"
+//#include "torusfitting.h"
+#include "clustering.h"
 
 using namespace Falcor;
 
@@ -29,6 +30,8 @@ private:
     GraphicsState::SharedPtr mpState;
     Buffer::SharedPtr pVbo;
     Vao::SharedPtr pVao;
+
+    Program::DefineList defList;
 
     Buffer::SharedPtr cubeVbo;
     Vao::SharedPtr cubeVao;
@@ -76,7 +79,9 @@ private:
     Gui::RadioButtonGroup texsize;
     Gui::RadioButtonGroup texorder;
     Gui::RadioButtonGroup function;
+    Gui::RadioButtonGroup spheres;
     uint32_t func = 0;
+    uint32_t sphere = 1;
 
 
     //tóruszillesztés
@@ -85,9 +90,15 @@ private:
     GraphicsVars::SharedPtr fittingVars;
     GraphicsState::SharedPtr fittingState;
     std::vector<float4> toruspoints;
-    int numberofpoints = 30;
+    int numberofpoints = 3;
     bool newpoints = false;
     TorusFitting tfit;
+    TorusFitting tfit1;
+    Clustering clust;
+    float pointx = 1;
+    float pointy = 0;
+    float pointz = 0;
+    float boxsize = 2;
 
     DebugConsole console;
 

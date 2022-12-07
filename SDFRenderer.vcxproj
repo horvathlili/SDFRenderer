@@ -16,6 +16,7 @@
     <ClCompile Include="SDFRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="clustering.h" />
     <ClInclude Include="ComputeProgramWrapper.h" />
     <ClInclude Include="SDFRenderer.h" />
     <ClInclude Include="torusfitting.h" />

@@ -1,5 +1,11 @@
+#ifndef MODE
+#define MODE 0
+#endif
+
 #include "../Utils/Ray.hlsl"
 #include "../Utils/sdf.hlsl"
+
+
 
 struct psIn
 {
@@ -27,6 +33,10 @@ cbuffer psCb
     float R;
     float3 c;
     float3 d;
+    float r1;
+    float R1;
+    float3 c1;
+    float3 d1;
     float4 viewproj;
 };
 
@@ -46,7 +56,13 @@ PsOut main(psIn input) : SV_TARGET
     for (i = 0; i < n; i++)
     {
         pos = ray.p + t * ray.v;
-        float h = sdTorus2(pos, r, R, c, float3(d.x, d.z, d.y));
+        float h;
+        #if MODE == 0
+            h = sdTorus2(pos, r, R, c, d.xzy);
+        #endif
+        #if MODE == 1
+            h = min(sdTorus2(pos, r, R, c, d.xzy),sdTorus2(pos, r1, R1, c1, d1.xzy));
+        #endif
         if (h < 0.0001)
             break;
         t += h;

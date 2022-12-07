@@ -44,6 +44,8 @@ void main(uint3 threadId : SV_DispatchThreadID)
     }
 
     float ai[10];
+    
+    float aix[10];
 
     for (int l = 0; l < 10; l++)
     {
@@ -55,9 +57,15 @@ void main(uint3 threadId : SV_DispatchThreadID)
         ai[l] = aa;
     }
 
-    ai[9] -= (ai[0] * xi.x + ai[1] * xi.y + ai[2] * xi.z
-            + ai[3] * xi.x * xi.x + ai[4] * xi.y * xi.y  + ai[5] * xi.z * xi.z
+        
+    ai[0] = ai[0] - (2*xi.x * ai[3] + xi.y * ai[6] + xi.z * ai[7]);
+    ai[1] = ai[1] - (xi.x * ai[6] + 2*xi.y * ai[4] + xi.z * ai[8]);
+    ai[2] = ai[2] - (xi.x * ai[7] + xi.y * ai[8] + 2*xi.z * ai[5]);
+
+    ai[9] = ai[9] - (ai[0] * xi.x + ai[1] * xi.y + ai[2] * xi.z
+            + ai[3] * xi.x * xi.x + ai[4] * xi.y * xi.y + ai[5] * xi.z * xi.z
             + ai[6] * xi.x * xi.y + ai[7] * xi.x * xi.z + ai[8] * xi.y * xi.z);
+    
     //float n = sqrt(ai.r * ai.r + ai.g * ai.g + ai.b * ai.b);
     
     tex3D_uav1[threadId.xyz] = float4(ai[0],ai[1],ai[2],ai[3]);
