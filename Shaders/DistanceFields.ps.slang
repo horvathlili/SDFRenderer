@@ -133,8 +133,9 @@ PsOut main(psIn input) : SV_TARGET
         }
     
     // calc fragment depth
-    float4 depth_vec = mul(float4(t * r.v + r.p, 1), viewproj);
+    float4 depth_vec = mul(float4(pos, 1), viewproj);
     o.depth = depth_vec.z / depth_vec.w;
+    
      return o;
 }
 

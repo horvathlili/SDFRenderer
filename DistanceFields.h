@@ -1,14 +1,14 @@
 #pragma once
 #include "Falcor.h"
-#include "ComputeProgramWrapper.h"
+#include "Utils/ComputeProgramWrapper.h"
 #include "Eigen/Dense"
 #include <vector>
 //#include "torusfitting.h"
-#include "clustering.h"
+#include "Utils/clustering.h"
 
 using namespace Falcor;
 
-class SDFRenderer : public IRenderer
+class DistanceFields : public IRenderer
 {
 public:
     void onLoad(RenderContext* pRenderContext) override;
@@ -22,8 +22,6 @@ public:
     void setUpGui();
 
 private:
-
-    DepthStencilState::SharedPtr mpDepthTestDS = nullptr;
 
     GraphicsProgram::SharedPtr mProgram;
     GraphicsVars::SharedPtr mpVars;
@@ -60,6 +58,7 @@ private:
     ComputeProgramWrapper::SharedPtr mComputeProgramA2;
     std::vector<Texture::SharedPtr> sdfTextures;
     std::vector<Texture::SharedPtr> generateTexture(RenderContext* pRenderContext);
+    std::vector<Texture::SharedPtr> generateTorusTexture(RenderContext* pRenderContext);
     uint32_t textureOrder = 0;
 
     int res = 100;
@@ -71,7 +70,7 @@ private:
 
     Sampler::SharedPtr mpSampler;
 
-   std::vector<float> x0;
+    std::vector<float> x0;
 
 
     //gui
@@ -95,11 +94,12 @@ private:
     TorusFitting tfit;
     TorusFitting tfit1;
     Clustering clust;
-    float pointx = 1;
-    float pointy = 0;
-    float pointz = 0;
+    float3 point = float3(0);
     float boxsize = 2;
+    bool oneCluster = false;
 
     DebugConsole console;
+
+    int db = 2;
 
 };

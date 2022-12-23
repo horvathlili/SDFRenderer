@@ -1,4 +1,4 @@
-# Install script for directory: C:/tdk/Falcor/Source/Samples/SDFRenderer/dlib/dlib
+# Install script for directory: C:/tdk/Falcor/Source/Samples/DistanceFields/dlib/dlib
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

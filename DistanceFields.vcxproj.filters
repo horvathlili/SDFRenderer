@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="DistanceFields.cpp" />
+    <ClCompile Include="Utils\ComputeProgramWrapper.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="dlib\dlib\all\source.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="DistanceFields.h" />
+    <ClInclude Include="Utils\clustering.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\ComputeProgramWrapper.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\PseudoInverse.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\torusfitting.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{3b636adf-9e74-499a-95ea-9b73688eeac9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{b0168965-9f6f-4b6f-b2e1-a961737eb430}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ShaderSource Include="Utils\Ray.hlsl">
+      <Filter>Utils</Filter>
+    </ShaderSource>
+    <ShaderSource Include="Utils\sample.hlsl">
+      <Filter>Utils</Filter>
+    </ShaderSource>
+    <ShaderSource Include="Utils\sdf.hlsl">
+      <Filter>Utils</Filter>
+    </ShaderSource>
+    <ShaderSource Include="Utils\teapot.slang">
+      <Filter>Utils</Filter>
+    </ShaderSource>
+    <ShaderSource Include="Shaders\A2.cs.slang">
+      <Filter>Shaders</Filter>
+    </ShaderSource>
+    <ShaderSource Include="Shaders\DistanceFields.ps.slang">
+      <Filter>Shaders</Filter>
+    </ShaderSource>
+    <ShaderSource Include="Shaders\DistanceFields.vs.slang">
+      <Filter>Shaders</Filter>
+    </ShaderSource>
+    <ShaderSource Include="Shaders\FirstOrder.cs.slang">
+      <Filter>Shaders</Filter>
+    </ShaderSource>
+    <ShaderSource Include="Shaders\SDFTexture.cs.slang">
+      <Filter>Shaders</Filter>
+    </ShaderSource>
+    <ShaderSource Include="Shaders\TorusFitting.ps.slang">
+      <Filter>Shaders</Filter>
+    </ShaderSource>
+    <ShaderSource Include="Shaders\TorusFitting.vs.slang">
+      <Filter>Shaders</Filter>
+    </ShaderSource>
+  </ItemGroup>
+</Project>

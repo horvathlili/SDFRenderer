@@ -38,6 +38,7 @@ cbuffer psCb
     float3 c1;
     float3 d1;
     float4 viewproj;
+    int cluster;
 };
 
 
@@ -63,14 +64,34 @@ PsOut main(psIn input) : SV_TARGET
         #if MODE == 1
             h = min(sdTorus2(pos, r, R, c, d.xzy),sdTorus2(pos, r1, R1, c1, d1.xzy));
         #endif
+        #if MODE == 2
+            if (cluster == 0){
+                h = sdTorus2(pos, r, R, c, d.xzy);
+            }
+            else
+            {
+                h = sdTorus2(pos, r1, R1, c1, d1.xzy);
+            }
+        #endif
         if (h < 0.0001)
             break;
         t += h;
     }
-    
 
     if (i < n)
         o.col = float4(1, 1, 1, 1);
+
+    #if MODE == 1
+        for (int j = 0; j < 4*4*4; j++){
+            if (length(t*ray.v) > length(float3(points[j].xyz)-ray.p) || i >= n){
+                if (dot(ray.v,normalize(float3(points[j].xyz)-ray.p)) >0.9999){
+                o.col = float4(1,0,0,1);
+            }
+            }
+        }
+    #endif
+    
+  
     // calc fragment depth
     float4 depth_vec = mul(float4(t * ray.v + ray.p, 1), viewproj);
     o.depth = depth_vec.z / depth_vec.w;

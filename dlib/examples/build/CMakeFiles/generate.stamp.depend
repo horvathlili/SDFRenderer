@@ -93,8 +93,8 @@ C:/Program Files/CMake/share/cmake-3.24/Modules/Platform/Windows-MSVC-CXX.cmake
 C:/Program Files/CMake/share/cmake-3.24/Modules/Platform/Windows-MSVC.cmake
 C:/Program Files/CMake/share/cmake-3.24/Modules/Platform/Windows.cmake
 C:/Program Files/CMake/share/cmake-3.24/Modules/Platform/WindowsPaths.cmake
-C:/tdk/Falcor/Source/Samples/SDFRenderer/dlib/examples/CMakeLists.txt
-C:/tdk/Falcor/Source/Samples/SDFRenderer/dlib/examples/build/CMakeFiles/3.24.1/CMakeCCompiler.cmake
-C:/tdk/Falcor/Source/Samples/SDFRenderer/dlib/examples/build/CMakeFiles/3.24.1/CMakeCXXCompiler.cmake
-C:/tdk/Falcor/Source/Samples/SDFRenderer/dlib/examples/build/CMakeFiles/3.24.1/CMakeRCCompiler.cmake
-C:/tdk/Falcor/Source/Samples/SDFRenderer/dlib/examples/build/CMakeFiles/3.24.1/CMakeSystem.cmake
+C:/tdk/Falcor/Source/Samples/DistanceFields/dlib/examples/CMakeLists.txt
+C:/tdk/Falcor/Source/Samples/DistanceFields/dlib/examples/build/CMakeFiles/3.24.1/CMakeCCompiler.cmake
+C:/tdk/Falcor/Source/Samples/DistanceFields/dlib/examples/build/CMakeFiles/3.24.1/CMakeCXXCompiler.cmake
+C:/tdk/Falcor/Source/Samples/DistanceFields/dlib/examples/build/CMakeFiles/3.24.1/CMakeRCCompiler.cmake
+C:/tdk/Falcor/Source/Samples/DistanceFields/dlib/examples/build/CMakeFiles/3.24.1/CMakeSystem.cmake

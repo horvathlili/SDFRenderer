@@ -2,7 +2,7 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\CMakeFiles\3.24.1\CompilerIdC\CompilerIdC.exe</FullPath>
+      <FullPath>C:\tdk\Falcor\Source\Samples\DistanceFields\dlib\examples\build\CMakeFiles\3.24.1\CompilerIdC\CompilerIdC.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles />

@@ -1,4 +1,4 @@
-# Install script for directory: C:/tdk/Falcor/Source/Samples/SDFRenderer/dlib/examples
+# Install script for directory: C:/tdk/Falcor/Source/Samples/DistanceFields/dlib/examples
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -34,7 +34,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("C:/tdk/Falcor/Source/Samples/SDFRenderer/dlib/examples/build/dlib_build/cmake_install.cmake")
+  include("C:/tdk/Falcor/Source/Samples/DistanceFields/dlib/examples/build/dlib_build/cmake_install.cmake")
 
 endif()
 
@@ -46,5 +46,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "C:/tdk/Falcor/Source/Samples/SDFRenderer/dlib/examples/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "C:/tdk/Falcor/Source/Samples/DistanceFields/dlib/examples/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

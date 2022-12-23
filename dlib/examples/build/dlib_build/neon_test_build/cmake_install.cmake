@@ -1,4 +1,4 @@
-# Install script for directory: C:/tdk/Falcor/Source/Samples/SDFRenderer/dlib/dlib/cmake_utils/test_for_neon
+# Install script for directory: C:/tdk/Falcor/Source/Samples/DistanceFields/dlib/dlib/cmake_utils/test_for_neon
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -40,5 +40,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "C:/tdk/Falcor/Source/Samples/SDFRenderer/dlib/examples/build/dlib_build/neon_test_build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "C:/tdk/Falcor/Source/Samples/DistanceFields/dlib/examples/build/dlib_build/neon_test_build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

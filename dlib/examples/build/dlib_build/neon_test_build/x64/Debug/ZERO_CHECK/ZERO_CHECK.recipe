@@ -2,7 +2,7 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\dlib_build\neon_test_build\x64\Debug\ZERO_CHECK</FullPath>
+      <FullPath>C:\tdk\Falcor\Source\Samples\DistanceFields\dlib\examples\build\dlib_build\neon_test_build\x64\Debug\ZERO_CHECK</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles />

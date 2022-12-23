@@ -21,13 +21,13 @@ C:/Program Files/CMake/share/cmake-3.24/Modules/FindZLIB.cmake
 C:/Program Files/CMake/share/cmake-3.24/Modules/GNUInstallDirs.cmake
 C:/Program Files/CMake/share/cmake-3.24/Modules/Internal/CheckSourceCompiles.cmake
 C:/Program Files/CMake/share/cmake-3.24/Modules/SelectLibraryConfigurations.cmake
-C:/tdk/Falcor/Source/Samples/SDFRenderer/dlib/dlib/CMakeLists.txt
-C:/tdk/Falcor/Source/Samples/SDFRenderer/dlib/dlib/cmake_utils/check_if_neon_available.cmake
-C:/tdk/Falcor/Source/Samples/SDFRenderer/dlib/dlib/cmake_utils/find_blas.cmake
-C:/tdk/Falcor/Source/Samples/SDFRenderer/dlib/dlib/cmake_utils/find_libjpeg.cmake
-C:/tdk/Falcor/Source/Samples/SDFRenderer/dlib/dlib/cmake_utils/find_libpng.cmake
-C:/tdk/Falcor/Source/Samples/SDFRenderer/dlib/dlib/cmake_utils/find_libwebp.cmake
-C:/tdk/Falcor/Source/Samples/SDFRenderer/dlib/dlib/cmake_utils/release_build_by_default
-C:/tdk/Falcor/Source/Samples/SDFRenderer/dlib/dlib/cmake_utils/set_compiler_specific_options.cmake
-C:/tdk/Falcor/Source/Samples/SDFRenderer/dlib/dlib/cmake_utils/use_cpp_11.cmake
-C:/tdk/Falcor/Source/Samples/SDFRenderer/dlib/examples/build/CMakeFiles/CheckTypeSize/SIZE_OF_VOID_PTR.c
+C:/tdk/Falcor/Source/Samples/DistanceFields/dlib/dlib/CMakeLists.txt
+C:/tdk/Falcor/Source/Samples/DistanceFields/dlib/dlib/cmake_utils/check_if_neon_available.cmake
+C:/tdk/Falcor/Source/Samples/DistanceFields/dlib/dlib/cmake_utils/find_blas.cmake
+C:/tdk/Falcor/Source/Samples/DistanceFields/dlib/dlib/cmake_utils/find_libjpeg.cmake
+C:/tdk/Falcor/Source/Samples/DistanceFields/dlib/dlib/cmake_utils/find_libpng.cmake
+C:/tdk/Falcor/Source/Samples/DistanceFields/dlib/dlib/cmake_utils/find_libwebp.cmake
+C:/tdk/Falcor/Source/Samples/DistanceFields/dlib/dlib/cmake_utils/release_build_by_default
+C:/tdk/Falcor/Source/Samples/DistanceFields/dlib/dlib/cmake_utils/set_compiler_specific_options.cmake
+C:/tdk/Falcor/Source/Samples/DistanceFields/dlib/dlib/cmake_utils/use_cpp_11.cmake
+C:/tdk/Falcor/Source/Samples/DistanceFields/dlib/examples/build/CMakeFiles/CheckTypeSize/SIZE_OF_VOID_PTR.c

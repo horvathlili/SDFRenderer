@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <CustomBuild Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\build\dlib_build\neon_test_build\CMakeFiles\0be2cb7d201d255dcdfa5df80e3456de\generate.stamp.rule">
+    <CustomBuild Include="C:\tdk\Falcor\Source\Samples\DistanceFields\dlib\examples\build\dlib_build\neon_test_build\CMakeFiles\21e3cb0d0b6266fbf775e2c3051dfcf9\generate.stamp.rule">
       <Filter>CMake Rules</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="CMake Rules">
-      <UniqueIdentifier>{D7D240B6-8C0E-34FC-A018-18C8D90CC0BA}</UniqueIdentifier>
+      <UniqueIdentifier>{6F9EB642-320A-3BCD-B62A-A0FC652E5A1C}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

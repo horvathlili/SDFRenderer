@@ -1,16 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\learning_to_track_ex.cpp">
+    <ClCompile Include="C:\tdk\Falcor\Source\Samples\DistanceFields\dlib\examples\learning_to_track_ex.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib\examples\CMakeLists.txt" />
+    <CustomBuild Include="C:\tdk\Falcor\Source\Samples\DistanceFields\dlib\examples\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">
-      <UniqueIdentifier>{7F2A1567-EC6A-3B91-98F8-115549EA04F2}</UniqueIdentifier>
+      <UniqueIdentifier>{A883C581-7DF1-3D75-9A9E-F3F1CDFD4AA4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

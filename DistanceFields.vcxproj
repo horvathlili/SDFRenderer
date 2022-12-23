@@ -11,16 +11,16 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ComputeProgramWrapper.cpp" />
+    <ClCompile Include="DistanceFields.cpp" />
     <ClCompile Include="dlib\dlib\all\source.cpp" />
-    <ClCompile Include="SDFRenderer.cpp" />
+    <ClCompile Include="Utils\ComputeProgramWrapper.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="clustering.h" />
-    <ClInclude Include="ComputeProgramWrapper.h" />
-    <ClInclude Include="SDFRenderer.h" />
-    <ClInclude Include="torusfitting.h" />
+    <ClInclude Include="DistanceFields.h" />
+    <ClInclude Include="Utils\clustering.h" />
+    <ClInclude Include="Utils\ComputeProgramWrapper.h" />
     <ClInclude Include="Utils\PseudoInverse.h" />
+    <ClInclude Include="Utils\torusfitting.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Falcor\Falcor.vcxproj">
@@ -29,20 +29,21 @@
   </ItemGroup>
   <ItemGroup>
     <ShaderSource Include="Shaders\A2.cs.slang" />
+    <ShaderSource Include="Shaders\DistanceFields.ps.slang" />
+    <ShaderSource Include="Shaders\DistanceFields.vs.slang" />
     <ShaderSource Include="Shaders\FirstOrder.cs.slang" />
-    <ShaderSource Include="Shaders\SDFRenderer.ps.slang" />
-    <ShaderSource Include="Shaders\SDFRenderer.vs.slang" />
     <ShaderSource Include="Shaders\SDFTexture.cs.slang" />
     <ShaderSource Include="Shaders\TorusFitting.ps.slang" />
     <ShaderSource Include="Shaders\TorusFitting.vs.slang" />
     <ShaderSource Include="Utils\Ray.hlsl" />
+    <ShaderSource Include="Utils\sample.hlsl" />
     <ShaderSource Include="Utils\sdf.hlsl" />
     <ShaderSource Include="Utils\teapot.slang" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{6BE93358-53F7-48DD-AABA-00C6B152E8F9}</ProjectGuid>
+    <ProjectGuid>{F8E1B30A-C032-4118-B9DC-7AC8DB900489}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>SDFRenderer</RootNamespace>
+    <RootNamespace>DistanceFields</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -73,8 +74,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\tdk\Falcor\Source\Samples\SDFRenderer;C:\tdk\Falcor\Source\Samples\SDFRenderer\dlib;$(IncludePath)</IncludePath>
-    <LibraryPath>$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\tdk\Falcor\Source\Samples\DistanceFields\dlib;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -88,12 +88,11 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/bigobj</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

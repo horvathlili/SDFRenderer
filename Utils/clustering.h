@@ -4,7 +4,6 @@
 #include <dlib/clustering.h>
 #include "torusfitting.h"
 
-
 using namespace Falcor;
 
 class Clustering {
@@ -18,6 +17,7 @@ public:
     std::vector<float4> c2;
     int right_cluster;
     int wrong_cluster;
+    int initial_footpoint;
 
     std::vector<float4> getPoints(int mode,float3 p, float box, int res) {
 
@@ -25,6 +25,24 @@ public:
         std::vector<float4> points_d;
         cluster.clear();
 
+        {float4 px;
+        px.xyz = p;
+        float4 pxx;
+        if (mode == 1) {
+            pxx = twoCircleDistAndNormals(px.xyz, float3(-0.3), 0.4, float3(0.3), 0.2);
+        }
+        if (mode == 2) {
+            pxx = twoCircleDistAndNormals(px.xyz, float3(0), 0.4, float3(0, 0.1, 0.5), 0.2);
+        }
+        if (mode == 3) {
+            pxx = twoCircleDistAndNormals(px.xyz, float3(0), 0.7, float3(0.7), 0.1);
+        }
+        
+            initial_footpoint = cluster.back();
+        
+        px.w = pxx.x;
+        points_p.push_back(px);
+        points_d.push_back(pxx); }
 
         int res2 = res - 1;
 
@@ -45,7 +63,9 @@ public:
                         if (mode == 3) {
                             pxx = twoCircleDistAndNormals(px.xyz, float3(0), 0.7, float3(0.7), 0.1);
                         }
-                        
+                        if (px.x == p.x && px.y == p.y && px.z == p.z) {
+                            initial_footpoint = cluster.back();
+                        }
                         px.w = pxx.x;
                         points_p.push_back(px);
                         points_d.push_back(pxx);
@@ -121,6 +141,8 @@ public:
 
         right_cluster = 0;
         wrong_cluster = 0;
+
+        initial_footpoint = test(samples[0]);
 
         for (int i = 0; i < points_data.size(); i++) {
             std::cout << cluster[i] << " "<<test(samples[i]) << std::endl;
